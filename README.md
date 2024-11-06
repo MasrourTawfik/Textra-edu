@@ -18,7 +18,8 @@ Textra-edu is a tool designed to extract and process text from various document 
    - **Question Answering:** Answering questions based on the text content.
 4. **Output:** The processed text, summaries, or answers are presented to the user.
 
-**Pipeline:**
+**The Pipeline:**
+
 ![Textra-edu Workflow](https://github.com/user-attachments/assets/35a0ce95-51c2-48b2-9b79-3bdc99bb9339)
 
 

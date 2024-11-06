@@ -30,3 +30,4 @@ Textra-edu is a tool designed to extract and process text from various document 
 **License:**
 
 This project has no License.
+![Uploading pipeline.png…]()

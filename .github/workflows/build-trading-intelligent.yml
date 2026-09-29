@@ -1,0 +1,116 @@
+name: Build Trading Intelligent CH01
+
+on:
+  push:
+    branches:
+      - trading-intelligent
+    paths:
+      - ".course-build/CH01/**"
+      - ".github/workflows/build-trading-intelligent.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-ch01:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r .course-build/CH01/requirements.txt
+          pip install nbconvert jupyter
+
+      - name: Install LaTeX
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y             texlive-latex-base             texlive-latex-recommended             texlive-latex-extra             texlive-fonts-recommended             texlive-lang-french             lmodern             zip
+
+      - name: Reconstruct sources and resources
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd .course-build/CH01
+
+          for f in chapters/*.tex.b64; do
+            base64 -d "$f" > "${f%.b64}"
+          done
+
+          base64 -d scripts/generate_figures.py.b64 > scripts/generate_figures.py
+
+          cat notebooks/student_nb.part*.b64 | base64 -d             > CH01_NB01_Market_Data_Returns_STUDENT_Tawfik_Masrour.ipynb
+
+          python scripts/generate_figures.py
+
+      - name: Execute student notebook
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd .course-build/CH01
+          jupyter nbconvert             --to notebook             --execute CH01_NB01_Market_Data_Returns_STUDENT_Tawfik_Masrour.ipynb             --ExecutePreprocessor.timeout=240             --output CH01_NB01_Market_Data_Returns_STUDENT_EXECUTED.ipynb
+
+      - name: Compile chapter twice
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd .course-build/CH01
+          pdflatex -interaction=nonstopmode -halt-on-error main.tex
+          pdflatex -interaction=nonstopmode -halt-on-error main.tex
+
+          test -s main.pdf
+          if grep -E "Undefined control sequence|Fatal error|Emergency stop|There were undefined references|Overfull \\hbox" main.log; then
+            echo "LaTeX quality gate failed."
+            exit 1
+          fi
+
+      - name: Publish student resources
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          PDF="Trading_Intelligent_CH01_Comprendre_Marche_Donnees_Tawfik_Masrour_v1.1.pdf"
+          NB="CH01_NB01_Market_Data_Returns_STUDENT_Tawfik_Masrour.ipynb"
+          CSV="TI_CH01_Market_Data_v1.csv"
+          PACK="Trading_Intelligent_CH01_v1.1_STUDENT.zip"
+
+          mkdir -p chapters/CH01 notebooks/CH01 data/CH01 student-packs
+          cp .course-build/CH01/main.pdf "chapters/CH01/$PDF"
+          cp ".course-build/CH01/$NB" "notebooks/CH01/$NB"
+          cp ".course-build/CH01/datasets/$CSV" "data/CH01/$CSV"
+
+          rm -rf /tmp/ti_ch01_student
+          mkdir -p /tmp/ti_ch01_student
+          cp "chapters/CH01/$PDF" /tmp/ti_ch01_student/
+          cp "notebooks/CH01/$NB" /tmp/ti_ch01_student/
+          cp "data/CH01/$CSV" /tmp/ti_ch01_student/
+          cp docs/CH01_STUDENT_GUIDE.md /tmp/ti_ch01_student/README_ETUDIANT_CH01.md
+
+          (
+            cd /tmp/ti_ch01_student
+            zip -9 -r "$GITHUB_WORKSPACE/student-packs/$PACK" .
+          )
+
+      - name: Commit generated student deliverables
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add             chapters/CH01/Trading_Intelligent_CH01_Comprendre_Marche_Donnees_Tawfik_Masrour_v1.1.pdf             notebooks/CH01/CH01_NB01_Market_Data_Returns_STUDENT_Tawfik_Masrour.ipynb             data/CH01/TI_CH01_Market_Data_v1.csv             student-packs/Trading_Intelligent_CH01_v1.1_STUDENT.zip
+
+          if git diff --cached --quiet; then
+            echo "No generated changes to commit."
+          else
+            git commit -m "Publish Trading Intelligent CH01 v1.1 student resources"
+            git push
+          fi

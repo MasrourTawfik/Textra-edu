@@ -10,21 +10,20 @@
 
 ## Commencer ici
 
-Le cours est organisé comme un **ouvrage progressif** accompagné de notebooks exécutables et de jeux de données documentés.
+**Un seul point d'entrée est nécessaire.** Pour chaque chapitre, lisez d'abord le support, puis ouvrez le notebook étudiant dans Google Colab. Les jeux de données et les consignes sont versionnés avec le cours.
 
 ### Chapitre 1 — Comprendre le marché et ses données
 
-**Statut : disponible — v1.1**
+**Version : v1.1**
 
 | Ressource | Accès |
 |---|---|
-| 📘 Chapitre PDF | [Lire / télécharger le PDF](chapters/CH01/Trading_Intelligent_CH01_Comprendre_Marche_Donnees_Tawfik_Masrour_v1.1.pdf) |
-| ▶️ Notebook étudiant | [Ouvrir dans Google Colab](https://colab.research.google.com/github/MasrourTawfik/Textra-edu/blob/trading-intelligent/notebooks/CH01/CH01_NB01_Market_Data_Returns_STUDENT_Tawfik_Masrour.ipynb) |
-| 📊 Dataset | [TI_CH01_MARKET_V1](data/CH01/TI_CH01_Market_Data_v1.csv) |
-| 📦 Pack étudiant | [Télécharger le pack CH01](student-packs/Trading_Intelligent_CH01_v1.1_STUDENT.zip) |
-| 🧭 Guide | [Comment travailler avec les ressources](docs/GETTING_STARTED.md) |
+| 📘 Chapitre et ressources | [Accéder au CH01](chapters/CH01/README.md) |
+| ▶️ Notebook étudiant | [Ouvrir directement dans Google Colab](https://colab.research.google.com/github/MasrourTawfik/Textra-edu/blob/trading-intelligent/notebooks/CH01/CH01_NB01_Market_Data_Returns_STUDENT_Tawfik_Masrour.ipynb) |
+| 📊 Données | [TI_CH01_MARKET_V1 — description et utilisation](data/CH01/README.md) |
+| 🧭 Guide étudiant | [Bien démarrer](docs/CH01_STUDENT_GUIDE.md) |
 
-Le notebook reste exécutable même si le fichier de données n'est pas présent : il peut reconstruire déterministiquement le jeu pédagogique **TI_CH01_MARKET_V1**.
+Le notebook est autonome : si le fichier CSV n'est pas présent localement, il reconstruit déterministiquement le jeu pédagogique **TI_CH01_MARKET_V1**. Aucun chemin de dossier particulier n'est imposé.
 
 ---
 
@@ -53,23 +52,20 @@ Chaque notion importante est construite selon la logique :
 
 **question → intuition → formalisation → mathématiques → méthode → expérience → interprétation → limites → mise en pratique**
 
-Les rappels de Machine Learning, Deep Learning et Reinforcement Learning sont introduits **juste au moment où ils deviennent nécessaires**. Les acronymes et notions nouvelles sont explicités, puis illustrés par des exemples simples ou des visualisations lorsque cela améliore la compréhension.
+Les rappels de **Machine Learning (ML)**, **Deep Learning (DL)** et **Reinforcement Learning (RL)** sont introduits au moment où ils deviennent nécessaires. Les notions et abréviations nouvelles sont définies puis, lorsque cela améliore réellement la compréhension, illustrées par un exemple simple, une analogie ou une visualisation.
 
 ---
 
 ## Reproductibilité
 
 - notebooks compatibles Google Colab ;
-- jeux de données identifiés et documentés ;
+- données pédagogiques identifiées et documentées ;
 - expériences reproductibles ;
 - aucune clé API requise pour les premiers chapitres ;
-- versions publiées explicitement.
+- versions explicitement publiées ;
+- solutions enseignant et évaluations conservées dans un espace privé distinct.
 
 ---
 
-## Utilisation des ressources
-
-Les ressources destinées au lecteur se trouvent sur cette branche. Les solutions enseignant, notes pédagogiques, évaluations et sources privées ne sont pas publiées.
-
-**Copyright © Tawfik Masrour, 2026.**  
-Aucune licence ouverte générale n'est accordée sauf mention explicite contraire dans un fichier ou une ressource.
+**© Tawfik Masrour — 2026.**  
+Aucune licence ouverte générale n'est accordée sauf mention explicite contraire.

@@ -1,0 +1,136 @@
+% Style system - Trading Intelligent
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{lmodern}
+\usepackage[a4paper,margin=2.15cm,headheight=15pt]{geometry}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{booktabs,tabularx,array,longtable}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable,theorems}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes.geometric}
+\usepackage{listings}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{xparse}
+\usepackage{ifthen}
+\usepackage{lastpage}
+\usepackage{etoolbox}
+
+\definecolor{AcademicBlue}{HTML}{173B57}
+\definecolor{Petrol}{HTML}{2C7A7B}
+\definecolor{WarmGold}{HTML}{C79A3B}
+\definecolor{MutedRed}{HTML}{A94B4B}
+\definecolor{Ink}{HTML}{1F2933}
+\definecolor{SoftGray}{HTML}{F2F5F7}
+\definecolor{MidGray}{HTML}{66717D}
+\definecolor{PaleBlue}{HTML}{EAF1F5}
+\definecolor{PaleTeal}{HTML}{E8F3F2}
+\definecolor{PaleGold}{HTML}{FBF4E4}
+\definecolor{PaleRed}{HTML}{F8ECEC}
+
+\color{Ink}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=AcademicBlue,
+  urlcolor=Petrol,
+  citecolor=Petrol,
+  pdftitle={Trading Intelligent - CH01 - Comprendre le marche et ses donnees},
+  pdfauthor={Tawfik Masrour},
+  pdfsubject={Manuel universitaire de trading quantitatif et intelligent},
+  pdfkeywords={trading intelligent, finance, series temporelles, rendements, OHLCV, microstructure}
+}
+
+\titleformat{\chapter}[display]
+  {\normalfont\bfseries\color{AcademicBlue}}
+  {\filleft\Large CHAPITRE \thechapter}
+  {0.4ex}
+  {\titlerule[1.2pt]\vspace{0.7ex}\Huge}
+\titlespacing*{\chapter}{0pt}{-12pt}{22pt}
+\titleformat{\section}{\Large\bfseries\color{AcademicBlue}}{\thesection}{0.65em}{}
+\titleformat{\subsection}{\large\bfseries\color{Petrol}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{Ink}}{\thesubsubsection}{0.6em}{}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.58em}
+\renewcommand{\baselinestretch}{1.08}
+\setlist[itemize]{leftmargin=1.6em,itemsep=0.2em,topsep=0.3em}
+\setlist[enumerate]{leftmargin=1.8em,itemsep=0.25em,topsep=0.3em}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{MidGray}{Trading Intelligent}}
+\fancyhead[R]{\small\textcolor{MidGray}{Tawfik Masrour}}
+\fancyfoot[L]{\small\textcolor{MidGray}{Trading Intelligent}}
+\fancyfoot[C]{\small\textcolor{MidGray}{\thepage}}
+\fancyfoot[R]{\small\textcolor{MidGray}{\copyright\ Tawfik Masrour - 2026}}
+\renewcommand{\headrulewidth}{0.3pt}
+\renewcommand{\footrulewidth}{0.3pt}
+
+\newtcolorbox{definitionbox}[1]{enhanced,breakable,colback=PaleBlue,colframe=AcademicBlue,
+  boxrule=0.8pt,arc=1.5mm,left=3mm,right=3mm,top=2mm,bottom=2mm,
+  title={\textbf{DÉFINITION -- #1}},fonttitle=\small\bfseries,colbacktitle=AcademicBlue,coltitle=white}
+\newtcolorbox{intuitionbox}[1]{enhanced,breakable,colback=PaleTeal,colframe=Petrol,
+  boxrule=0.8pt,arc=1.5mm,left=3mm,right=3mm,top=2mm,bottom=2mm,
+  title={\textbf{INTUITION -- #1}},fonttitle=\small\bfseries,colbacktitle=Petrol,coltitle=white}
+\newtcolorbox{attentionbox}[1]{enhanced,breakable,colback=PaleRed,colframe=MutedRed,
+  boxrule=0.8pt,arc=1.5mm,left=3mm,right=3mm,top=2mm,bottom=2mm,
+  title={\textbf{ATTENTION -- #1}},fonttitle=\small\bfseries,colbacktitle=MutedRed,coltitle=white}
+\newtcolorbox{engineerbox}[1]{enhanced,breakable,colback=PaleGold,colframe=WarmGold,
+  boxrule=0.8pt,arc=1.5mm,left=3mm,right=3mm,top=2mm,bottom=2mm,
+  title={\textbf{POINT DE VUE INGÉNIEUR -- #1}},fonttitle=\small\bfseries,colbacktitle=WarmGold,coltitle=Ink}
+\newtcolorbox{recallbox}[1]{enhanced,breakable,colback=SoftGray,colframe=MidGray,
+  boxrule=0.7pt,arc=1.5mm,left=3mm,right=3mm,top=2mm,bottom=2mm,
+  title={\textbf{RAPPEL JUSTE À TEMPS -- #1}},fonttitle=\small\bfseries,colbacktitle=MidGray,coltitle=white}
+\newtcolorbox{takeawaybox}[1]{enhanced,breakable,colback=white,colframe=AcademicBlue,
+  boxrule=1.1pt,arc=1.5mm,left=3mm,right=3mm,top=2mm,bottom=2mm,
+  title={\textbf{À RETENIR -- #1}},fonttitle=\small\bfseries,colbacktitle=AcademicBlue,coltitle=white}
+\newtcolorbox{examplebox}[1]{enhanced,breakable,colback=white,colframe=Petrol,
+  boxrule=0.65pt,arc=1.5mm,left=3mm,right=3mm,top=2mm,bottom=2mm,
+  title={\textbf{EXEMPLE -- #1}},fonttitle=\small\bfseries,colbacktitle=Petrol,coltitle=white}
+\newtcolorbox{questionbox}[1]{enhanced,breakable,colback=PaleGold,colframe=WarmGold,
+  boxrule=0.9pt,arc=1.5mm,left=3mm,right=3mm,top=2mm,bottom=2mm,
+  title={\textbf{QUESTION DIRECTRICE -- #1}},fonttitle=\small\bfseries,colbacktitle=WarmGold,coltitle=Ink}
+
+\renewcommand{\arraystretch}{1.18}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+
+\lstset{
+  language=Python,
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{AcademicBlue}\bfseries,
+  commentstyle=\color{MidGray}\itshape,
+  stringstyle=\color{Petrol},
+  showstringspaces=false,
+  frame=single,
+  rulecolor=\color{SoftGray},
+  backgroundcolor=\color{SoftGray},
+  breaklines=true,
+  columns=fullflexible,
+  xleftmargin=0.5em,
+  xrightmargin=0.5em
+}
+
+\newcommand{\coursefigure}[4][0.92\textwidth]{%
+\begin{figure}[H]
+\centering
+\includegraphics[width=#1]{#2}
+\caption{#3}
+\label{#4}
+\end{figure}}
+
+\newif\ifsharecopy
+\sharecopyfalse
+\newcommand{\ShareRecipient}{ }
+\AtBeginDocument{%
+\ifsharecopy
+\begin{center}\small\textcolor{MidGray}{Copie pédagogique remise à \ShareRecipient}\end{center}
+\fi}

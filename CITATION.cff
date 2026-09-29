@@ -1,0 +1,9 @@
+cff-version: 1.2.0
+message: "If you use this educational material, please cite it as below."
+title: "Trading Intelligent"
+type: software
+authors:
+  - family-names: Masrour
+    given-names: Tawfik
+version: "1.1"
+date-released: 2026-09-29

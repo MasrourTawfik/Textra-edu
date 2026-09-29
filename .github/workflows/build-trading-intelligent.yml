@@ -51,6 +51,12 @@ jobs:
 
           cat notebooks/student_nb.part*.b64 | base64 -d             > CH01_NB01_Market_Data_Returns_STUDENT_Tawfik_Masrour.ipynb
 
+          # Exact-source integrity gates
+          cat chapters/ch01_part01.tex chapters/ch01_part02.tex chapters/ch01_part03.tex chapters/ch01_part04.tex chapters/ch01_part05.tex chapters/ch01_part06.tex > reconstructed_ch01_content.tex
+          test "$(sha256sum reconstructed_ch01_content.tex | cut -d' ' -f1)" = "f20717987dfd86de2536d2616c4402995306744eab4b154ad4fd98cb2498d42e"
+          test "$(sha256sum CH01_NB01_Market_Data_Returns_STUDENT_Tawfik_Masrour.ipynb | cut -d' ' -f1)" = "74e90cfce904983aa1f9406c976984c7d545c840cc6d8dcb575ffc0e0bf25cf1"
+          test "$(sha256sum scripts/generate_figures.py | cut -d' ' -f1)" = "6ab7267ae4a64d25dcdfed41de34538f689219d88a97ff080fd9e09eba709873"
+
           python scripts/generate_figures.py
 
       - name: Execute student notebook

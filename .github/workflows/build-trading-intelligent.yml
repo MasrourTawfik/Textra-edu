@@ -18,6 +18,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -106,11 +108,15 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
+          # Incorporate harmless documentation updates that may have landed while
+          # this reproducible build was running.
+          git pull --rebase origin trading-intelligent
+
           git add             chapters/CH01/Trading_Intelligent_CH01_Comprendre_Marche_Donnees_Tawfik_Masrour_v1.1.pdf             notebooks/CH01/CH01_NB01_Market_Data_Returns_STUDENT_Tawfik_Masrour.ipynb             data/CH01/TI_CH01_Market_Data_v1.csv             student-packs/Trading_Intelligent_CH01_v1.1_STUDENT.zip
 
           if git diff --cached --quiet; then
             echo "No generated changes to commit."
           else
             git commit -m "Publish Trading Intelligent CH01 v1.1 student resources"
-            git push
+            git push origin HEAD:trading-intelligent
           fi

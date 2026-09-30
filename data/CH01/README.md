@@ -1,16 +1,7 @@
-# TI_CH01_MARKET_V1
+# Dataset CH01
 
-**Fichier :** `TI_CH01_Market_Data_v1.csv`
+- **Identifiant pédagogique :** `TI_CH01_MARKET_V1`
+- **Fichier :** `TI_CH01_Market_Data_v1.csv`
+- **Nature :** synthétique, déterministe et pédagogique.
 
-Jeu de données **synthétique, déterministe et pédagogique** utilisé dans le chapitre 1.
-
-Il sert à étudier de manière reproductible :
-- une trajectoire de prix ;
-- les variables OHLCV ;
-- bid, ask et spread ;
-- rendements simples et logarithmiques ;
-- volatilité glissante ;
-- changements de régime de volatilité ;
-- diagnostics élémentaires de qualité.
-
-Ce fichier ne représente aucun actif financier réel. Il est régénérable à partir d'une graine fixe.
+Les notebooks CH01 chargent ce fichier lorsqu'il est disponible. Ils disposent aussi d'un mécanisme de reconstruction déterministe afin de rester exécutables dans un environnement Colab propre.

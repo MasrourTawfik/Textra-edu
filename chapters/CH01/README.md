@@ -1,11 +1,11 @@
 # CH01 — Comprendre le marché et ses données
 
-**Version publique : v1.1**
+**Version publiée : v2.1 — Pr. Tawfik Masrour**
 
-Ce chapitre construit les objets de base du trading quantitatif : cotations, bid/ask, spread, OHLCV, rendements, volatilité, qualité des données et premiers ponts vers le Machine Learning et le Reinforcement Learning.
+> **Question directrice :** que contient réellement une donnée de marché, comment la lire correctement et quelles informations perd-on lorsqu'on l'agrège ?
 
-- Le PDF officiel de cette version est généré automatiquement à partir des sources validées.
-- Le notebook associé se trouve dans `notebooks/CH01/`.
-- Le jeu de données pédagogique porte l'identifiant stable `TI_CH01_MARKET_V1`.
-
-Retour à la [page d'accueil](../../README.md).
+- [Lire le PDF CH01 v2.1](Trading_Intelligent_CH01_Comprendre_Marche_Donnees_Tawfik_Masrour_v2.1.pdf)
+- [NB01 — ouvrir dans Colab](https://colab.research.google.com/github/MasrourTawfik/Textra-edu/blob/trading-intelligent/notebooks/CH01/CH01_NB01_Market_Data_OHLCV_Microstructure_Tawfik_Masrour_STUDENT.ipynb)
+- [NB02 — ouvrir dans Colab](https://colab.research.google.com/github/MasrourTawfik/Textra-edu/blob/trading-intelligent/notebooks/CH01/CH01_NB02_Returns_Adjustments_Data_Quality_Tawfik_Masrour_STUDENT.ipynb)
+- [Dataset](../../data/CH01/TI_CH01_Market_Data_v1.csv)
+- [Guide étudiant](../../docs/CH01_STUDENT_GUIDE.md)

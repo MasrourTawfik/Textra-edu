@@ -1,29 +1,18 @@
-# CH01 — Guide étudiant
+# Guide étudiant — CH01 v2.1
 
-## Comprendre le marché et ses données
+Le CH01 associe un chapitre de référence et deux laboratoires complémentaires.
 
-Le chapitre 1 installe les objets qui seront utilisés pendant tout le cours : prix, bid, ask, spread, OHLCV, rendements, volatilité, calendrier et qualité des données.
+## Ordre conseillé
 
-### Ressources à utiliser
+1. **Lire le chapitre** pour construire les définitions et l'intuition : transactions et cotations, bid/ask/spread, OHLCV, temps et calendriers, opérations sur titres, rendements, volatilité élémentaire et qualité des données.
+2. **NB01** : passer de la donnée de marché à l'expérience — bid/ask/mid/last, lecture des bougies, perte d'information par agrégation, volume et temporalités.
+3. **NB02** : transformer une donnée brute en information statistiquement et économiquement légitime — prix brut/ajusté, split, dividende, rendements et diagnostics de qualité.
 
-1. Lire le PDF du chapitre.
-2. Ouvrir le notebook étudiant dans Google Colab.
-3. Utiliser le jeu de données `TI_CH01_MARKET_V1` lorsque vous souhaitez examiner directement le fichier CSV.
-4. Réaliser le mini-défi à la fin du notebook.
+## Ressources
 
-### Ce qu'il faut être capable d'expliquer
+- [PDF CH01](../chapters/CH01/Trading_Intelligent_CH01_Comprendre_Marche_Donnees_Tawfik_Masrour_v2.1.pdf)
+- [Dataset CH01](../data/CH01/TI_CH01_Market_Data_v1.csv)
+- [NB01 dans Colab](https://colab.research.google.com/github/MasrourTawfik/Textra-edu/blob/trading-intelligent/notebooks/CH01/CH01_NB01_Market_Data_OHLCV_Microstructure_Tawfik_Masrour_STUDENT.ipynb)
+- [NB02 dans Colab](https://colab.research.google.com/github/MasrourTawfik/Textra-edu/blob/trading-intelligent/notebooks/CH01/CH01_NB02_Returns_Adjustments_Data_Quality_Tawfik_Masrour_STUDENT.ipynb)
 
-- pourquoi le marché ne possède pas un prix unique ;
-- ce que signifient Open, High, Low, Close et Volume ;
-- la différence entre prix et rendement ;
-- la différence entre rendement simple et logarithmique ;
-- ce que mesure une volatilité glissante ;
-- pourquoi une information future ne peut pas devenir une variable explicative au temps de la décision.
-
-### Conseil de travail
-
-Ne cherchez pas à mémoriser les formules isolément. Reconstituez-les sur un petit exemple numérique, puis vérifiez que le code automatise bien le même raisonnement.
-
----
-
-© Tawfik Masrour — 2026
+Les versions publiques ne contiennent ni solutions privées, ni notebooks MASTER, ni notes enseignant.

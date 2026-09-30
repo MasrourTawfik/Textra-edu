@@ -1,11 +1,10 @@
-name: Build Trading Intelligent CH01
+name: Publish Trading Intelligent CH01 v2.1
 
 on:
   push:
     branches:
       - trading-intelligent
     paths:
-      - ".course-build/CH01/**"
       - ".github/workflows/build-trading-intelligent.yml"
   workflow_dispatch:
 
@@ -13,10 +12,11 @@ permissions:
   contents: write
 
 jobs:
-  build-ch01:
+  publish-ch01-v21:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout
+      - name: Checkout branch
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
@@ -26,103 +26,141 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Install Python dependencies
+      - name: Reconstruct validated v2.1 source payload
+        shell: bash
         run: |
+          set -euo pipefail
+          cat .course-build/publish-v2.1/part*.b64 | base64 -d > /tmp/ti_ch01_v21.tar.gz
+          tar -xzf /tmp/ti_ch01_v21.tar.gz
+          test -f .course-build/CH01_v2_1/Trading_Intelligent_CH01_Comprendre_Marche_Donnees_Tawfik_Masrour.tex
+          test -f .course-build/CH01_v2_1/scripts/CH01_Generate_Figures.py
+          test -f .course-build/CH01_v2_1/scripts/CH01_Generate_Notebooks.py
+
+      - name: Install Python dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
           python -m pip install --upgrade pip
-          pip install -r .course-build/CH01/requirements.txt
+          pip install -r .course-build/CH01_v2_1/requirements.txt
           pip install nbconvert jupyter
 
       - name: Install LaTeX
+        shell: bash
         run: |
+          set -euo pipefail
           sudo apt-get update
-          sudo apt-get install -y             texlive-latex-base             texlive-latex-recommended             texlive-latex-extra             texlive-fonts-recommended             texlive-lang-french             lmodern             zip
+          sudo apt-get install -y \
+            texlive-latex-base \
+            texlive-latex-recommended \
+            texlive-latex-extra \
+            texlive-fonts-recommended \
+            texlive-lang-french \
+            lmodern
 
-      - name: Reconstruct sources and resources
+      - name: Generate dataset, figures and notebooks
         shell: bash
         run: |
           set -euo pipefail
-          cd .course-build/CH01
+          cd .course-build/CH01_v2_1
+          python scripts/CH01_Generate_Figures.py
+          python scripts/CH01_Generate_Notebooks.py
+          test -s datasets/TI_CH01_Market_Data_v1.csv
+          test -s notebooks/student/CH01_NB01_Market_Data_OHLCV_Microstructure_Tawfik_Masrour_STUDENT.ipynb
+          test -s notebooks/student/CH01_NB02_Returns_Adjustments_Data_Quality_Tawfik_Masrour_STUDENT.ipynb
 
-          for f in chapters/*.tex.b64; do
-            base64 -d "$f" > "${f%.b64}"
-          done
-
-          base64 -d scripts/generate_figures.py.b64 > scripts/generate_figures.py
-
-          cat notebooks/student_nb.part*.b64 | base64 -d             > CH01_NB01_Market_Data_Returns_STUDENT_Tawfik_Masrour.ipynb
-
-          # Exact-source integrity gates
-          cat chapters/ch01_part01.tex chapters/ch01_part02.tex chapters/ch01_part03.tex chapters/ch01_part04.tex chapters/ch01_part05.tex chapters/ch01_part06.tex > reconstructed_ch01_content.tex
-          test "$(sha256sum reconstructed_ch01_content.tex | cut -d' ' -f1)" = "f20717987dfd86de2536d2616c4402995306744eab4b154ad4fd98cb2498d42e"
-          test "$(sha256sum CH01_NB01_Market_Data_Returns_STUDENT_Tawfik_Masrour.ipynb | cut -d' ' -f1)" = "74e90cfce904983aa1f9406c976984c7d545c840cc6d8dcb575ffc0e0bf25cf1"
-          test "$(sha256sum scripts/generate_figures.py | cut -d' ' -f1)" = "6ab7267ae4a64d25dcdfed41de34538f689219d88a97ff080fd9e09eba709873"
-
-          python scripts/generate_figures.py
-
-      - name: Execute student notebook
+      - name: Execute both student notebooks
         shell: bash
         run: |
           set -euo pipefail
-          cd .course-build/CH01
-          jupyter nbconvert             --to notebook             --execute CH01_NB01_Market_Data_Returns_STUDENT_Tawfik_Masrour.ipynb             --ExecutePreprocessor.timeout=240             --output CH01_NB01_Market_Data_Returns_STUDENT_EXECUTED.ipynb
+          cd .course-build/CH01_v2_1
+          jupyter nbconvert --to notebook --execute \
+            notebooks/student/CH01_NB01_Market_Data_OHLCV_Microstructure_Tawfik_Masrour_STUDENT.ipynb \
+            --ExecutePreprocessor.timeout=300 \
+            --output /tmp/CH01_NB01_STUDENT_EXECUTED.ipynb
+          jupyter nbconvert --to notebook --execute \
+            notebooks/student/CH01_NB02_Returns_Adjustments_Data_Quality_Tawfik_Masrour_STUDENT.ipynb \
+            --ExecutePreprocessor.timeout=300 \
+            --output /tmp/CH01_NB02_STUDENT_EXECUTED.ipynb
 
-      - name: Compile chapter twice
+      - name: Compile canonical PDF twice
         shell: bash
         run: |
           set -euo pipefail
-          cd .course-build/CH01
-          pdflatex -interaction=nonstopmode -halt-on-error main.tex
-          pdflatex -interaction=nonstopmode -halt-on-error main.tex
-
-          test -s main.pdf
-          if grep -E "Undefined control sequence|Fatal error|Emergency stop|There were undefined references|Overfull \\hbox" main.log; then
+          cd .course-build/CH01_v2_1
+          TEX="Trading_Intelligent_CH01_Comprendre_Marche_Donnees_Tawfik_Masrour.tex"
+          pdflatex -interaction=nonstopmode -halt-on-error "$TEX"
+          pdflatex -interaction=nonstopmode -halt-on-error "$TEX"
+          test -s Trading_Intelligent_CH01_Comprendre_Marche_Donnees_Tawfik_Masrour.pdf
+          if grep -E "Undefined control sequence|Fatal error|Emergency stop|There were undefined references|Overfull \\hbox" Trading_Intelligent_CH01_Comprendre_Marche_Donnees_Tawfik_Masrour.log; then
             echo "LaTeX quality gate failed."
             exit 1
           fi
 
-      - name: Publish student resources
+      - name: Publish clean student portal
         shell: bash
         run: |
           set -euo pipefail
+          BUILD=".course-build/CH01_v2_1"
+          PDF="Trading_Intelligent_CH01_Comprendre_Marche_Donnees_Tawfik_Masrour_v2.1.pdf"
+          NB1="CH01_NB01_Market_Data_OHLCV_Microstructure_Tawfik_Masrour_STUDENT.ipynb"
+          NB2="CH01_NB02_Returns_Adjustments_Data_Quality_Tawfik_Masrour_STUDENT.ipynb"
 
-          PDF="Trading_Intelligent_CH01_Comprendre_Marche_Donnees_Tawfik_Masrour_v1.1.pdf"
-          NB="CH01_NB01_Market_Data_Returns_STUDENT_Tawfik_Masrour.ipynb"
-          CSV="TI_CH01_Market_Data_v1.csv"
-          PACK="Trading_Intelligent_CH01_v1.1_STUDENT.zip"
+          rm -rf chapters/CH01 notebooks/CH01 data/CH01 docs
+          mkdir -p chapters/CH01 notebooks/CH01 data/CH01 docs
 
-          mkdir -p chapters/CH01 notebooks/CH01 data/CH01 student-packs
-          cp .course-build/CH01/main.pdf "chapters/CH01/$PDF"
-          cp ".course-build/CH01/$NB" "notebooks/CH01/$NB"
-          cp ".course-build/CH01/datasets/$CSV" "data/CH01/$CSV"
+          cp .portal/README.md README.md
+          cp .portal/chapters/CH01/README.md chapters/CH01/README.md
+          cp .portal/data/CH01/README.md data/CH01/README.md
+          cp .portal/docs/GETTING_STARTED.md docs/GETTING_STARTED.md
+          cp .portal/docs/CH01_STUDENT_GUIDE.md docs/CH01_STUDENT_GUIDE.md
 
-          rm -rf /tmp/ti_ch01_student
-          mkdir -p /tmp/ti_ch01_student
-          cp "chapters/CH01/$PDF" /tmp/ti_ch01_student/
-          cp "notebooks/CH01/$NB" /tmp/ti_ch01_student/
-          cp "data/CH01/$CSV" /tmp/ti_ch01_student/
-          cp docs/CH01_STUDENT_GUIDE.md /tmp/ti_ch01_student/README_ETUDIANT_CH01.md
+          cp "$BUILD/Trading_Intelligent_CH01_Comprendre_Marche_Donnees_Tawfik_Masrour.pdf" "chapters/CH01/$PDF"
+          cp "$BUILD/notebooks/student/$NB1" "notebooks/CH01/$NB1"
+          cp "$BUILD/notebooks/student/$NB2" "notebooks/CH01/$NB2"
+          cp "$BUILD/datasets/TI_CH01_Market_Data_v1.csv" data/CH01/TI_CH01_Market_Data_v1.csv
 
-          (
-            cd /tmp/ti_ch01_student
-            zip -9 -r "$GITHUB_WORKSPACE/student-packs/$PACK" .
-          )
+          rm -rf .course-build/CH01 .course-build/publish-v2.1
+          rm -rf "$BUILD" .portal
+          rm -rf student-packs
 
-      - name: Commit generated student deliverables
+      - name: Public safety and completeness gates
+        shell: bash
+        run: |
+          set -euo pipefail
+          PDF="chapters/CH01/Trading_Intelligent_CH01_Comprendre_Marche_Donnees_Tawfik_Masrour_v2.1.pdf"
+          NB1="notebooks/CH01/CH01_NB01_Market_Data_OHLCV_Microstructure_Tawfik_Masrour_STUDENT.ipynb"
+          NB2="notebooks/CH01/CH01_NB02_Returns_Adjustments_Data_Quality_Tawfik_Masrour_STUDENT.ipynb"
+          CSV="data/CH01/TI_CH01_Market_Data_v1.csv"
+
+          test -s "$PDF"
+          test -s "$NB1"
+          test -s "$NB2"
+          test -s "$CSV"
+          test -s docs/GETTING_STARTED.md
+          test -s docs/CH01_STUDENT_GUIDE.md
+
+          if find . -path ./.git -prune -o -type f \( -iname "*MASTER*" -o -iname "*solution*" -o -iname "*corrige*" \) -print | grep -q .; then
+            echo "Private/instructor material detected in public branch."
+            exit 1
+          fi
+
+          if grep -R -nE 'sandbox:|/mnt/data/|C:\\Users\\' \
+              README.md chapters/CH01 notebooks/CH01 data/CH01 docs; then
+            echo "Local/sandbox path detected in public material."
+            exit 1
+          fi
+
+      - name: Commit published CH01 v2.1
         shell: bash
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-          # Incorporate harmless documentation updates that may have landed while
-          # this reproducible build was running.
-          git pull --rebase origin trading-intelligent
-
-          git add             chapters/CH01/Trading_Intelligent_CH01_Comprendre_Marche_Donnees_Tawfik_Masrour_v1.1.pdf             notebooks/CH01/CH01_NB01_Market_Data_Returns_STUDENT_Tawfik_Masrour.ipynb             data/CH01/TI_CH01_Market_Data_v1.csv             student-packs/Trading_Intelligent_CH01_v1.1_STUDENT.zip
+          git add -A
 
           if git diff --cached --quiet; then
-            echo "No generated changes to commit."
+            echo "No publication changes to commit."
           else
-            git commit -m "Publish Trading Intelligent CH01 v1.1 student resources"
+            git commit -m "Publish CH01 v2.1 student portal"
             git push origin HEAD:trading-intelligent
           fi

@@ -58,6 +58,39 @@ jobs:
             exit 1
           fi
 
+      - name: Verify GitHub and Colab launch endpoints
+        shell: bash
+        run: |
+          set -euo pipefail
+          NB1_NAME="CH01_NB01_Market_Data_OHLCV_Microstructure_Tawfik_Masrour_STUDENT.ipynb"
+          NB2_NAME="CH01_NB02_Returns_Adjustments_Data_Quality_Tawfik_Masrour_STUDENT.ipynb"
+
+          RAW1="https://raw.githubusercontent.com/MasrourTawfik/Textra-edu/trading-intelligent/notebooks/CH01/$NB1_NAME"
+          RAW2="https://raw.githubusercontent.com/MasrourTawfik/Textra-edu/trading-intelligent/notebooks/CH01/$NB2_NAME"
+          COLAB1="https://colab.research.google.com/github/MasrourTawfik/Textra-edu/blob/trading-intelligent/notebooks/CH01/$NB1_NAME"
+          COLAB2="https://colab.research.google.com/github/MasrourTawfik/Textra-edu/blob/trading-intelligent/notebooks/CH01/$NB2_NAME"
+
+          curl --fail --silent --show-error --location --retry 3 "$RAW1" -o /tmp/nb01.ipynb
+          curl --fail --silent --show-error --location --retry 3 "$RAW2" -o /tmp/nb02.ipynb
+
+          python - <<'PY'
+          import json
+          for p in ["/tmp/nb01.ipynb", "/tmp/nb02.ipynb"]:
+              with open(p, encoding="utf-8") as f:
+                  nb = json.load(f)
+              assert nb.get("cells"), f"{p}: notebook sans cellules"
+          PY
+
+          code1="$(curl --silent --show-error --location --retry 3 --output /tmp/colab1.html --write-out '%{http_code}' "$COLAB1")"
+          code2="$(curl --silent --show-error --location --retry 3 --output /tmp/colab2.html --write-out '%{http_code}' "$COLAB2")"
+          test "$code1" = "200"
+          test "$code2" = "200"
+          test -s /tmp/colab1.html
+          test -s /tmp/colab2.html
+
+          echo "NB01 Colab HTTP: $code1"
+          echo "NB02 Colab HTTP: $code2"
+
       - name: Setup Python
         uses: actions/setup-python@v5
         with:

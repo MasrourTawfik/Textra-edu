@@ -7,8 +7,11 @@ on:
     paths:
       - "README.md"
       - "chapters/CH01/**"
+      - "chapters/CH02/**"
       - "notebooks/CH01/**"
+      - "notebooks/CH02/**"
       - "data/CH01/**"
+      - "data/CH02/**"
       - "docs/**"
       - ".github/workflows/build-trading-intelligent.yml"
   workflow_dispatch:
@@ -28,32 +31,69 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          PDF="chapters/CH01/Trading_Intelligent_CH01_Comprendre_Marche_Donnees_Tawfik_Masrour_v2.1.pdf"
-          NB1="notebooks/CH01/CH01_NB01_Market_Data_OHLCV_Microstructure_Tawfik_Masrour_STUDENT.ipynb"
-          NB2="notebooks/CH01/CH01_NB02_Returns_Adjustments_Data_Quality_Tawfik_Masrour_STUDENT.ipynb"
-          CSV="data/CH01/TI_CH01_Market_Data_v1.csv"
 
-          test -s "$PDF"
-          test -s "$NB1"
-          test -s "$NB2"
-          test -s "$CSV"
-          test -s README.md
+          CH01_PDF="chapters/CH01/Trading_Intelligent_CH01_Comprendre_Marche_Donnees_Tawfik_Masrour_v2.1.pdf"
+          CH01_NB1="notebooks/CH01/CH01_NB01_Market_Data_OHLCV_Microstructure_Tawfik_Masrour_STUDENT.ipynb"
+          CH01_NB2="notebooks/CH01/CH01_NB02_Returns_Adjustments_Data_Quality_Tawfik_Masrour_STUDENT.ipynb"
+          CH01_CSV="data/CH01/TI_CH01_Market_Data_v1.csv"
+
+          CH02_PDF="chapters/CH02/Trading_Intelligent_CH02_Dependance_Temporelle_ARIMA_Tawfik_Masrour_v2.2.pdf"
+          CH02_FICHE="chapters/CH02/fiches/Trading_Intelligent_CH02_Fiche_Reference_Formules_Definitions_Tawfik_Masrour.pdf"
+          CH02_NB1="notebooks/CH02/CH02_NB01_Stationarity_ACF_PACF_Tawfik_Masrour_STUDENT.ipynb"
+          CH02_NB2="notebooks/CH02/CH02_NB02_ARIMA_Diagnostics_Forecasting_Tawfik_Masrour_STUDENT.ipynb"
+          CH02_CSV="data/CH02/TI_CH02_TS_Models_v1.csv"
+
+          test -s "$CH01_PDF"
+          test -s "$CH01_NB1"
+          test -s "$CH01_NB2"
+          test -s "$CH01_CSV"
           test -s chapters/CH01/README.md
           test -s data/CH01/README.md
-          test -s docs/GETTING_STARTED.md
           test -s docs/CH01_STUDENT_GUIDE.md
+
+          test -s "$CH02_PDF"
+          test -s "$CH02_FICHE"
+          test -s "$CH02_NB1"
+          test -s "$CH02_NB2"
+          test -s "$CH02_CSV"
+          test -s chapters/CH02/README.md
+          test -s data/CH02/README.md
+          test -s docs/CH02_STUDENT_GUIDE.md
+
+          test -s README.md
+          test -s docs/GETTING_STARTED.md
 
           test ! -e notebooks/CH01/CH01_NB01_Market_Data_Returns_STUDENT_Tawfik_Masrour.ipynb
           test ! -e chapters/CH01/main.pdf
           test ! -e chapters/CH01/main.tex
+          test ! -e chapters/CH02/main.pdf
+          test ! -e chapters/CH02/main.tex
 
-          if find . -path ./.git -prune -o -type f \( -iname "*MASTER*" -o -iname "*solution*" -o -iname "*corrige*" \) -print | grep -q .; then
-            echo "Private/instructor material detected in public branch."
+          if find . -path ./.git -prune -o -type f \( \
+              -iname "*MASTER*" \
+              -o -iname "*solution*" \
+              -o -iname "*corrige*" \
+              -o -iname "*teacher*" \
+              -o -iname "*instructor*" \
+              -o -iname "*.zip" \
+              -o -iname "*.7z" \
+              -o -iname "*.rar" \
+              \) -print | grep -q .; then
+            echo "Private/instructor/archive material detected in public branch."
             exit 1
           fi
 
-          if grep -R -nE 'sandbox:|/mnt/data/|C:\\Users\\' \
-              README.md chapters/CH01 notebooks/CH01 data/CH01 docs; then
+          if find chapters/CH02 -type f -iname "*.tex" -print | grep -q .; then
+            echo "LaTeX source detected in public CH02."
+            exit 1
+          fi
+
+          if grep -R -I -nE 'sandbox:|/mnt/data/|C:\\Users\\|C:/Users/' \
+              README.md \
+              chapters/CH01 chapters/CH02 \
+              notebooks/CH01 notebooks/CH02 \
+              data/CH01 data/CH02 \
+              docs; then
             echo "Local/sandbox path detected in public material."
             exit 1
           fi
@@ -62,34 +102,63 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          NB1_NAME="CH01_NB01_Market_Data_OHLCV_Microstructure_Tawfik_Masrour_STUDENT.ipynb"
-          NB2_NAME="CH01_NB02_Returns_Adjustments_Data_Quality_Tawfik_Masrour_STUDENT.ipynb"
 
-          RAW1="https://raw.githubusercontent.com/MasrourTawfik/Textra-edu/trading-intelligent/notebooks/CH01/$NB1_NAME"
-          RAW2="https://raw.githubusercontent.com/MasrourTawfik/Textra-edu/trading-intelligent/notebooks/CH01/$NB2_NAME"
-          COLAB1="https://colab.research.google.com/github/MasrourTawfik/Textra-edu/blob/trading-intelligent/notebooks/CH01/$NB1_NAME"
-          COLAB2="https://colab.research.google.com/github/MasrourTawfik/Textra-edu/blob/trading-intelligent/notebooks/CH01/$NB2_NAME"
+          CH01_NB1_NAME="CH01_NB01_Market_Data_OHLCV_Microstructure_Tawfik_Masrour_STUDENT.ipynb"
+          CH01_NB2_NAME="CH01_NB02_Returns_Adjustments_Data_Quality_Tawfik_Masrour_STUDENT.ipynb"
+          CH02_NB1_NAME="CH02_NB01_Stationarity_ACF_PACF_Tawfik_Masrour_STUDENT.ipynb"
+          CH02_NB2_NAME="CH02_NB02_ARIMA_Diagnostics_Forecasting_Tawfik_Masrour_STUDENT.ipynb"
 
-          curl --fail --silent --show-error --location --retry 3 "$RAW1" -o /tmp/nb01.ipynb
-          curl --fail --silent --show-error --location --retry 3 "$RAW2" -o /tmp/nb02.ipynb
+          CH01_RAW1="https://raw.githubusercontent.com/MasrourTawfik/Textra-edu/trading-intelligent/notebooks/CH01/$CH01_NB1_NAME"
+          CH01_RAW2="https://raw.githubusercontent.com/MasrourTawfik/Textra-edu/trading-intelligent/notebooks/CH01/$CH01_NB2_NAME"
+          CH02_RAW1="https://raw.githubusercontent.com/MasrourTawfik/Textra-edu/trading-intelligent/notebooks/CH02/$CH02_NB1_NAME"
+          CH02_RAW2="https://raw.githubusercontent.com/MasrourTawfik/Textra-edu/trading-intelligent/notebooks/CH02/$CH02_NB2_NAME"
+
+          CH01_COLAB1="https://colab.research.google.com/github/MasrourTawfik/Textra-edu/blob/trading-intelligent/notebooks/CH01/$CH01_NB1_NAME"
+          CH01_COLAB2="https://colab.research.google.com/github/MasrourTawfik/Textra-edu/blob/trading-intelligent/notebooks/CH01/$CH01_NB2_NAME"
+          CH02_COLAB1="https://colab.research.google.com/github/MasrourTawfik/Textra-edu/blob/trading-intelligent/notebooks/CH02/$CH02_NB1_NAME"
+          CH02_COLAB2="https://colab.research.google.com/github/MasrourTawfik/Textra-edu/blob/trading-intelligent/notebooks/CH02/$CH02_NB2_NAME"
+
+          curl --fail --silent --show-error --location --retry 3 "$CH01_RAW1" -o /tmp/ch01_nb01.ipynb
+          curl --fail --silent --show-error --location --retry 3 "$CH01_RAW2" -o /tmp/ch01_nb02.ipynb
+          curl --fail --silent --show-error --location --retry 3 "$CH02_RAW1" -o /tmp/ch02_nb01.ipynb
+          curl --fail --silent --show-error --location --retry 3 "$CH02_RAW2" -o /tmp/ch02_nb02.ipynb
 
           python - <<'PY'
           import json
-          for p in ["/tmp/nb01.ipynb", "/tmp/nb02.ipynb"]:
-              with open(p, encoding="utf-8") as f:
-                  nb = json.load(f)
-              assert nb.get("cells"), f"{p}: notebook sans cellules"
+
+          paths = [
+              "/tmp/ch01_nb01.ipynb",
+              "/tmp/ch01_nb02.ipynb",
+              "/tmp/ch02_nb01.ipynb",
+              "/tmp/ch02_nb02.ipynb",
+          ]
+
+          for path in paths:
+              with open(path, encoding="utf-8") as f:
+                  notebook = json.load(f)
+              assert notebook.get("cells"), f"{path}: notebook sans cellules"
+              assert notebook.get("nbformat") == 4, f"{path}: nbformat inattendu"
           PY
 
-          code1="$(curl --silent --show-error --location --retry 3 --output /tmp/colab1.html --write-out '%{http_code}' "$COLAB1")"
-          code2="$(curl --silent --show-error --location --retry 3 --output /tmp/colab2.html --write-out '%{http_code}' "$COLAB2")"
-          test "$code1" = "200"
-          test "$code2" = "200"
-          test -s /tmp/colab1.html
-          test -s /tmp/colab2.html
+          c11="$(curl --silent --show-error --location --retry 3 --output /tmp/ch01_colab1.html --write-out '%{http_code}' "$CH01_COLAB1")"
+          c12="$(curl --silent --show-error --location --retry 3 --output /tmp/ch01_colab2.html --write-out '%{http_code}' "$CH01_COLAB2")"
+          c21="$(curl --silent --show-error --location --retry 3 --output /tmp/ch02_colab1.html --write-out '%{http_code}' "$CH02_COLAB1")"
+          c22="$(curl --silent --show-error --location --retry 3 --output /tmp/ch02_colab2.html --write-out '%{http_code}' "$CH02_COLAB2")"
 
-          echo "NB01 Colab HTTP: $code1"
-          echo "NB02 Colab HTTP: $code2"
+          test "$c11" = "200"
+          test "$c12" = "200"
+          test "$c21" = "200"
+          test "$c22" = "200"
+
+          test -s /tmp/ch01_colab1.html
+          test -s /tmp/ch01_colab2.html
+          test -s /tmp/ch02_colab1.html
+          test -s /tmp/ch02_colab2.html
+
+          echo "CH01 NB01 Colab HTTP: $c11"
+          echo "CH01 NB02 Colab HTTP: $c12"
+          echo "CH02 NB01 Colab HTTP: $c21"
+          echo "CH02 NB02 Colab HTTP: $c22"
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -99,9 +168,9 @@ jobs:
       - name: Install notebook runtime
         run: |
           python -m pip install --upgrade pip
-          pip install numpy pandas matplotlib scipy jupyter nbconvert
+          pip install numpy pandas matplotlib scipy statsmodels jupyter nbconvert
 
-      - name: Run all — NB01
+      - name: Run all — CH01 NB01
         shell: bash
         run: |
           set -euo pipefail
@@ -110,7 +179,7 @@ jobs:
             --ExecutePreprocessor.timeout=300 \
             --output /tmp/CH01_NB01_STUDENT_EXECUTED.ipynb
 
-      - name: Run all — NB02
+      - name: Run all — CH01 NB02
         shell: bash
         run: |
           set -euo pipefail
@@ -118,3 +187,21 @@ jobs:
             notebooks/CH01/CH01_NB02_Returns_Adjustments_Data_Quality_Tawfik_Masrour_STUDENT.ipynb \
             --ExecutePreprocessor.timeout=300 \
             --output /tmp/CH01_NB02_STUDENT_EXECUTED.ipynb
+
+      - name: Run all — CH02 NB01
+        shell: bash
+        run: |
+          set -euo pipefail
+          jupyter nbconvert --to notebook --execute \
+            notebooks/CH02/CH02_NB01_Stationarity_ACF_PACF_Tawfik_Masrour_STUDENT.ipynb \
+            --ExecutePreprocessor.timeout=300 \
+            --output /tmp/CH02_NB01_STUDENT_EXECUTED.ipynb
+
+      - name: Run all — CH02 NB02
+        shell: bash
+        run: |
+          set -euo pipefail
+          jupyter nbconvert --to notebook --execute \
+            notebooks/CH02/CH02_NB02_ARIMA_Diagnostics_Forecasting_Tawfik_Masrour_STUDENT.ipynb \
+            --ExecutePreprocessor.timeout=300 \
+            --output /tmp/CH02_NB02_STUDENT_EXECUTED.ipynb

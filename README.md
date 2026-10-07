@@ -48,13 +48,33 @@ Ce dépôt est le **portail étudiant officiel** du cours *Trading Intelligent*.
 
 [Voir le notebook sur GitHub](notebooks/CH02/CH02_NB02_ARIMA_Diagnostics_Forecasting_Tawfik_Masrour_STUDENT.ipynb)
 
+### CH03 — Comprendre et prévoir le risque — v2.1
+
+- **Lire le chapitre :** [PDF CH03 v2.1](chapters/CH03/Trading_Intelligent_CH03_Volatilite_ARCH_GARCH_Tawfik_Masrour_v2.1.pdf)
+- **Fiche de référence :** [Formules & définitions essentielles](chapters/CH03/fiches/Trading_Intelligent_CH03_Fiche_Reference_Formules_Definitions_Tawfik_Masrour.pdf)
+- **Guide étudiant CH03 :** [CH03_STUDENT_GUIDE.md](docs/CH03_STUDENT_GUIDE.md)
+- **Dataset :** [TI_CH03_Vol_Risk_v1.csv](data/CH03/TI_CH03_Vol_Risk_v1.csv) — identifiant `TI_CH03_VOL_RISK_V1`
+
+#### Laboratoire 1 — ARCH/GARCH & diagnostics
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/MasrourTawfik/Textra-edu/blob/trading-intelligent/notebooks/CH03/CH03_NB01_ARCH_GARCH_Diagnostics_Tawfik_Masrour_STUDENT.ipynb)
+
+[Voir le notebook sur GitHub](notebooks/CH03/CH03_NB01_ARCH_GARCH_Diagnostics_Tawfik_Masrour_STUDENT.ipynb)
+
+#### Laboratoire 2 — Asymétrie, VaR & Expected Shortfall
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/MasrourTawfik/Textra-edu/blob/trading-intelligent/notebooks/CH03/CH03_NB02_Asymmetry_VaR_ES_Tawfik_Masrour_STUDENT.ipynb)
+
+[Voir le notebook sur GitHub](notebooks/CH03/CH03_NB02_Asymmetry_VaR_ES_Tawfik_Masrour_STUDENT.ipynb)
+
+---
 ## Progression du cours
 
 | Chapitre | Titre | État |
 |---|---|---:|
 | CH01 | Comprendre le marché et ses données | ✅ v2.1 |
 | CH02 | Comprendre la dépendance temporelle | ✅ v2.2 |
-| CH03 | Comprendre et prévoir le risque | 🔜 |
+| CH03 | Comprendre et prévoir le risque | ✅ v2.1 |
 | CH04 | Exploiter les relations entre actifs | 🔜 |
 | CH05 | De l’économétrie au Machine Learning financier | 🔜 |
 | CH06 | Apprendre sans regarder le futur | 🔜 |

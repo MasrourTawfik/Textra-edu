@@ -8,10 +8,13 @@ on:
       - "README.md"
       - "chapters/CH01/**"
       - "chapters/CH02/**"
+      - "chapters/CH03/**"
       - "notebooks/CH01/**"
       - "notebooks/CH02/**"
+      - "notebooks/CH03/**"
       - "data/CH01/**"
       - "data/CH02/**"
+      - "data/CH03/**"
       - "docs/**"
       - ".github/workflows/build-trading-intelligent.yml"
   workflow_dispatch:
@@ -43,6 +46,12 @@ jobs:
           CH02_NB2="notebooks/CH02/CH02_NB02_ARIMA_Diagnostics_Forecasting_Tawfik_Masrour_STUDENT.ipynb"
           CH02_CSV="data/CH02/TI_CH02_TS_Models_v1.csv"
 
+          CH03_PDF="chapters/CH03/Trading_Intelligent_CH03_Volatilite_ARCH_GARCH_Tawfik_Masrour_v2.1.pdf"
+          CH03_FICHE="chapters/CH03/fiches/Trading_Intelligent_CH03_Fiche_Reference_Formules_Definitions_Tawfik_Masrour.pdf"
+          CH03_NB1="notebooks/CH03/CH03_NB01_ARCH_GARCH_Diagnostics_Tawfik_Masrour_STUDENT.ipynb"
+          CH03_NB2="notebooks/CH03/CH03_NB02_Asymmetry_VaR_ES_Tawfik_Masrour_STUDENT.ipynb"
+          CH03_CSV="data/CH03/TI_CH03_Vol_Risk_v1.csv"
+
           test -s "$CH01_PDF"
           test -s "$CH01_NB1"
           test -s "$CH01_NB2"
@@ -60,6 +69,15 @@ jobs:
           test -s data/CH02/README.md
           test -s docs/CH02_STUDENT_GUIDE.md
 
+          test -s "$CH03_PDF"
+          test -s "$CH03_FICHE"
+          test -s "$CH03_NB1"
+          test -s "$CH03_NB2"
+          test -s "$CH03_CSV"
+          test -s chapters/CH03/README.md
+          test -s data/CH03/README.md
+          test -s docs/CH03_STUDENT_GUIDE.md
+
           test -s README.md
           test -s docs/GETTING_STARTED.md
 
@@ -68,6 +86,8 @@ jobs:
           test ! -e chapters/CH01/main.tex
           test ! -e chapters/CH02/main.pdf
           test ! -e chapters/CH02/main.tex
+          test ! -e chapters/CH03/main.pdf
+          test ! -e chapters/CH03/main.tex
 
           if find . -path ./.git -prune -o -type f \( \
               -iname "*MASTER*" \
@@ -83,16 +103,16 @@ jobs:
             exit 1
           fi
 
-          if find chapters/CH02 -type f -iname "*.tex" -print | grep -q .; then
-            echo "LaTeX source detected in public CH02."
+          if find chapters/CH02 chapters/CH03 -type f -iname "*.tex" -print | grep -q .; then
+            echo "LaTeX source detected in public CH02/CH03."
             exit 1
           fi
 
           if grep -R -I -nE 'sandbox:|/mnt/data/|C:\\Users\\|C:/Users/' \
               README.md \
-              chapters/CH01 chapters/CH02 \
-              notebooks/CH01 notebooks/CH02 \
-              data/CH01 data/CH02 \
+              chapters/CH01 chapters/CH02 chapters/CH03 \
+              notebooks/CH01 notebooks/CH02 notebooks/CH03 \
+              data/CH01 data/CH02 data/CH03 \
               docs; then
             echo "Local/sandbox path detected in public material."
             exit 1
@@ -107,21 +127,29 @@ jobs:
           CH01_NB2_NAME="CH01_NB02_Returns_Adjustments_Data_Quality_Tawfik_Masrour_STUDENT.ipynb"
           CH02_NB1_NAME="CH02_NB01_Stationarity_ACF_PACF_Tawfik_Masrour_STUDENT.ipynb"
           CH02_NB2_NAME="CH02_NB02_ARIMA_Diagnostics_Forecasting_Tawfik_Masrour_STUDENT.ipynb"
+          CH03_NB1_NAME="CH03_NB01_ARCH_GARCH_Diagnostics_Tawfik_Masrour_STUDENT.ipynb"
+          CH03_NB2_NAME="CH03_NB02_Asymmetry_VaR_ES_Tawfik_Masrour_STUDENT.ipynb"
 
           CH01_RAW1="https://raw.githubusercontent.com/MasrourTawfik/Textra-edu/trading-intelligent/notebooks/CH01/$CH01_NB1_NAME"
           CH01_RAW2="https://raw.githubusercontent.com/MasrourTawfik/Textra-edu/trading-intelligent/notebooks/CH01/$CH01_NB2_NAME"
           CH02_RAW1="https://raw.githubusercontent.com/MasrourTawfik/Textra-edu/trading-intelligent/notebooks/CH02/$CH02_NB1_NAME"
           CH02_RAW2="https://raw.githubusercontent.com/MasrourTawfik/Textra-edu/trading-intelligent/notebooks/CH02/$CH02_NB2_NAME"
+          CH03_RAW1="https://raw.githubusercontent.com/MasrourTawfik/Textra-edu/trading-intelligent/notebooks/CH03/$CH03_NB1_NAME"
+          CH03_RAW2="https://raw.githubusercontent.com/MasrourTawfik/Textra-edu/trading-intelligent/notebooks/CH03/$CH03_NB2_NAME"
 
           CH01_COLAB1="https://colab.research.google.com/github/MasrourTawfik/Textra-edu/blob/trading-intelligent/notebooks/CH01/$CH01_NB1_NAME"
           CH01_COLAB2="https://colab.research.google.com/github/MasrourTawfik/Textra-edu/blob/trading-intelligent/notebooks/CH01/$CH01_NB2_NAME"
           CH02_COLAB1="https://colab.research.google.com/github/MasrourTawfik/Textra-edu/blob/trading-intelligent/notebooks/CH02/$CH02_NB1_NAME"
           CH02_COLAB2="https://colab.research.google.com/github/MasrourTawfik/Textra-edu/blob/trading-intelligent/notebooks/CH02/$CH02_NB2_NAME"
+          CH03_COLAB1="https://colab.research.google.com/github/MasrourTawfik/Textra-edu/blob/trading-intelligent/notebooks/CH03/$CH03_NB1_NAME"
+          CH03_COLAB2="https://colab.research.google.com/github/MasrourTawfik/Textra-edu/blob/trading-intelligent/notebooks/CH03/$CH03_NB2_NAME"
 
           curl --fail --silent --show-error --location --retry 3 "$CH01_RAW1" -o /tmp/ch01_nb01.ipynb
           curl --fail --silent --show-error --location --retry 3 "$CH01_RAW2" -o /tmp/ch01_nb02.ipynb
           curl --fail --silent --show-error --location --retry 3 "$CH02_RAW1" -o /tmp/ch02_nb01.ipynb
           curl --fail --silent --show-error --location --retry 3 "$CH02_RAW2" -o /tmp/ch02_nb02.ipynb
+          curl --fail --silent --show-error --location --retry 3 "$CH03_RAW1" -o /tmp/ch03_nb01.ipynb
+          curl --fail --silent --show-error --location --retry 3 "$CH03_RAW2" -o /tmp/ch03_nb02.ipynb
 
           python - <<'PY'
           import json
@@ -131,6 +159,8 @@ jobs:
               "/tmp/ch01_nb02.ipynb",
               "/tmp/ch02_nb01.ipynb",
               "/tmp/ch02_nb02.ipynb",
+              "/tmp/ch03_nb01.ipynb",
+              "/tmp/ch03_nb02.ipynb",
           ]
 
           for path in paths:
@@ -144,21 +174,29 @@ jobs:
           c12="$(curl --silent --show-error --location --retry 3 --output /tmp/ch01_colab2.html --write-out '%{http_code}' "$CH01_COLAB2")"
           c21="$(curl --silent --show-error --location --retry 3 --output /tmp/ch02_colab1.html --write-out '%{http_code}' "$CH02_COLAB1")"
           c22="$(curl --silent --show-error --location --retry 3 --output /tmp/ch02_colab2.html --write-out '%{http_code}' "$CH02_COLAB2")"
+          c31="$(curl --silent --show-error --location --retry 3 --output /tmp/ch03_colab1.html --write-out '%{http_code}' "$CH03_COLAB1")"
+          c32="$(curl --silent --show-error --location --retry 3 --output /tmp/ch03_colab2.html --write-out '%{http_code}' "$CH03_COLAB2")"
 
           test "$c11" = "200"
           test "$c12" = "200"
           test "$c21" = "200"
           test "$c22" = "200"
+          test "$c31" = "200"
+          test "$c32" = "200"
 
           test -s /tmp/ch01_colab1.html
           test -s /tmp/ch01_colab2.html
           test -s /tmp/ch02_colab1.html
           test -s /tmp/ch02_colab2.html
+          test -s /tmp/ch03_colab1.html
+          test -s /tmp/ch03_colab2.html
 
           echo "CH01 NB01 Colab HTTP: $c11"
           echo "CH01 NB02 Colab HTTP: $c12"
           echo "CH02 NB01 Colab HTTP: $c21"
           echo "CH02 NB02 Colab HTTP: $c22"
+          echo "CH03 NB01 Colab HTTP: $c31"
+          echo "CH03 NB02 Colab HTTP: $c32"
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -205,3 +243,21 @@ jobs:
             notebooks/CH02/CH02_NB02_ARIMA_Diagnostics_Forecasting_Tawfik_Masrour_STUDENT.ipynb \
             --ExecutePreprocessor.timeout=300 \
             --output /tmp/CH02_NB02_STUDENT_EXECUTED.ipynb
+
+      - name: Run all — CH03 NB01
+        shell: bash
+        run: |
+          set -euo pipefail
+          jupyter nbconvert --to notebook --execute \
+            notebooks/CH03/CH03_NB01_ARCH_GARCH_Diagnostics_Tawfik_Masrour_STUDENT.ipynb \
+            --ExecutePreprocessor.timeout=300 \
+            --output /tmp/CH03_NB01_STUDENT_EXECUTED.ipynb
+
+      - name: Run all — CH03 NB02
+        shell: bash
+        run: |
+          set -euo pipefail
+          jupyter nbconvert --to notebook --execute \
+            notebooks/CH03/CH03_NB02_Asymmetry_VaR_ES_Tawfik_Masrour_STUDENT.ipynb \
+            --ExecutePreprocessor.timeout=300 \
+            --output /tmp/CH03_NB02_STUDENT_EXECUTED.ipynb

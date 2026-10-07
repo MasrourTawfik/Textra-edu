@@ -1,0 +1,146 @@
+name: Build CH02 v3.0 staging artifacts
+
+on:
+  push:
+    branches:
+      - ch02-v3.0-student-staging
+    paths:
+      - ".ch02-v3-bootstrap/**"
+      - ".github/workflows/ch02-v3-build-staging.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout staging branch
+        uses: actions/checkout@v4
+        with:
+          ref: ch02-v3.0-student-staging
+          fetch-depth: 0
+
+      - name: Reconstruct source bundle
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/ch02src
+          cat .ch02-v3-bootstrap/chunk_*.b64 | base64 --decode > /tmp/ch02-source.tar.gz
+          echo "eb8ec3f3b670288078ab01d5e52ba85d11db00c19f6d0c77570f110529d1ca6b  /tmp/ch02-source.tar.gz" | sha256sum -c -
+          tar -xzf /tmp/ch02-source.tar.gz -C /tmp/ch02src
+          test -s /tmp/ch02src/code/generate_assets.py
+          test -s /tmp/ch02src/code/build_notebooks.py
+          test -s /tmp/ch02src/latex/main.tex
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install exact Python runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip
+          pip install             numpy==2.3.5             pandas==2.2.3             matplotlib==3.10.8             scipy==1.17.0             statsmodels==0.14.6             nbformat==5.10.4             nbconvert==7.17.1             jupyter
+
+      - name: Generate deterministic assets, data and notebooks
+        shell: bash
+        run: |
+          set -euo pipefail
+          python /tmp/ch02src/code/generate_assets.py
+          python /tmp/ch02src/code/build_notebooks.py
+          echo "02437A8A0AD6739A85258C831068C63605E856C5AC5036BAECFA98C7D615BA90  /tmp/ch02src/datasets/TI_CH02_TS_MODELS_V3.csv" | sha256sum -c -
+          echo "2E2DD348D6B3760A80A56B486EFD80F881FBA4FDE3DD0F5BC120571EFD7651BD  /tmp/ch02src/notebooks/CH02_NB01_Fondations_ACF_AR1_Cercle_Unite_Tawfik_Masrour_MASTER.ipynb" | sha256sum -c -
+          echo "D567169D5E990608A8D72CC1BAB3B8FB4D891C75E3FD0AA4339AA5AB448D3C2B  /tmp/ch02src/notebooks/CH02_NB01_Fondations_ACF_AR1_Cercle_Unite_Tawfik_Masrour_STUDENT.ipynb" | sha256sum -c -
+          echo "F737B9252F271DF4B1883C8EA49ED12F0306F478A842D56391305AB262AF5F9D  /tmp/ch02src/notebooks/CH02_NB02_Stationnarite_Tests_ARIMA_Previsions_Tawfik_Masrour_MASTER.ipynb" | sha256sum -c -
+          echo "5F29405E97D285358FEFBF2C2B5F1411EFD102ADE239A294AC4FFF079DAF9AAB  /tmp/ch02src/notebooks/CH02_NB02_Stationnarite_Tests_ARIMA_Previsions_Tawfik_Masrour_STUDENT.ipynb" | sha256sum -c -
+
+      - name: Execute all notebooks without mutating canonical sources
+        shell: bash
+        run: |
+          set -euo pipefail
+          for nb in /tmp/ch02src/notebooks/*.ipynb; do
+            name="$(basename "$nb")"
+            jupyter nbconvert --to notebook --execute "$nb"               --ExecutePreprocessor.timeout=600               --output "/tmp/EXECUTED_$name"
+          done
+
+      - name: Install TeX
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq             texlive-latex-base             texlive-latex-extra             texlive-fonts-recommended             texlive-science             poppler-utils
+
+      - name: Compile main PDF and fiche
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd /tmp/ch02src/latex
+          pdflatex -interaction=nonstopmode -halt-on-error main.tex
+          pdflatex -interaction=nonstopmode -halt-on-error main.tex
+          pdflatex -interaction=nonstopmode -halt-on-error main.tex
+          pdflatex -interaction=nonstopmode -halt-on-error fiche.tex
+          pdflatex -interaction=nonstopmode -halt-on-error fiche.tex
+          cp main.pdf ../Trading_Intelligent_CH02_Dependance_Temporelle_ARIMA_Tawfik_Masrour_v3.0.pdf
+          mkdir -p ../fiches
+          cp fiche.pdf ../fiches/Trading_Intelligent_CH02_Fiche_Reference_Formules_Definitions_Tawfik_Masrour.pdf
+          rm -f ./*.aux ./*.log ./*.out ./*.toc ./*.fls ./*.fdb_latexmk
+          pdfinfo ../Trading_Intelligent_CH02_Dependance_Temporelle_ARIMA_Tawfik_Masrour_v3.0.pdf | grep -q 'Pages:[[:space:]]*63'
+          pdfinfo ../fiches/Trading_Intelligent_CH02_Fiche_Reference_Formules_Definitions_Tawfik_Masrour.pdf | grep -q 'Pages:[[:space:]]*4'
+          echo "MAIN_SHA=$(sha256sum ../Trading_Intelligent_CH02_Dependance_Temporelle_ARIMA_Tawfik_Masrour_v3.0.pdf | cut -d' ' -f1)"
+          echo "FICHE_SHA=$(sha256sum ../fiches/Trading_Intelligent_CH02_Fiche_Reference_Formules_Definitions_Tawfik_Masrour.pdf | cut -d' ' -f1)"
+
+      - name: Validate student privacy and notebook hygiene
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          for p in Path('/tmp/ch02src/notebooks').glob('*STUDENT.ipynb'):
+              nb=json.loads(p.read_text(encoding='utf-8'))
+              assert nb.get('nbformat') == 4
+              assert str(nb['metadata']['course']['version']) == '3.0'
+              for c in nb['cells']:
+                  if c.get('cell_type') == 'code':
+                      assert c.get('execution_count') is None
+                      assert c.get('outputs', []) == []
+          PY
+          test "$(find /tmp/ch02src/figures -type f | wc -l)" -eq 60
+          test "$(find /tmp/ch02src/notebooks -type f -name '*.ipynb' | wc -l)" -eq 4
+          ! grep -R -I -nE 'sandbox:|/mnt/data/|C:\\Users\\|C:/Users/' /tmp/ch02src/README.md /tmp/ch02src/notebooks /tmp/ch02src/datasets /tmp/ch02src/project
+
+      - name: Materialize staging artifacts
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf .ch02-v3-generated
+          mkdir -p .ch02-v3-generated/teacher
+          mkdir -p .ch02-v3-generated/student/fiches
+          mkdir -p .ch02-v3-generated/student/datasets
+          mkdir -p .ch02-v3-generated/student/notebooks
+          cp -a /tmp/ch02src/. .ch02-v3-generated/teacher/
+          cp /tmp/ch02src/Trading_Intelligent_CH02_Dependance_Temporelle_ARIMA_Tawfik_Masrour_v3.0.pdf .ch02-v3-generated/student/
+          cp /tmp/ch02src/fiches/Trading_Intelligent_CH02_Fiche_Reference_Formules_Definitions_Tawfik_Masrour.pdf .ch02-v3-generated/student/fiches/
+          cp /tmp/ch02src/datasets/README.md .ch02-v3-generated/student/datasets/
+          cp /tmp/ch02src/datasets/TI_CH02_TS_MODELS_V3.csv .ch02-v3-generated/student/datasets/
+          cp /tmp/ch02src/notebooks/CH02_NB01_Fondations_ACF_AR1_Cercle_Unite_Tawfik_Masrour_STUDENT.ipynb .ch02-v3-generated/student/notebooks/
+          cp /tmp/ch02src/notebooks/CH02_NB02_Stationnarite_Tests_ARIMA_Previsions_Tawfik_Masrour_STUDENT.ipynb .ch02-v3-generated/student/notebooks/
+          find .ch02-v3-generated/student -type f | sort
+          test "$(find .ch02-v3-generated/student -type f | wc -l)" -eq 6
+
+      - name: Commit generated artifacts to staging
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf .ch02-v3-bootstrap
+          rm -f .github/workflows/ch02-v3-build-staging.yml
+          git config user.name "MasrourTawfik"
+          git config user.email "t.masrour@ensam.umi.ac.ma"
+          git add -A
+          git diff --cached --check
+          git commit -m "Build validated CH02 v3.0 staging artifacts"
+          git push origin HEAD:ch02-v3.0-student-staging

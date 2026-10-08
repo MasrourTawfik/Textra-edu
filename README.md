@@ -29,24 +29,30 @@ Ce dépôt est le **portail étudiant officiel** du cours *Trading Intelligent*.
 
 ---
 
-### CH02 — Comprendre la dépendance temporelle : stationnarité, AR, MA et ARIMA — v2.2
+### CH02 — Comprendre la dépendance temporelle : de la série observée à SARIMA — v4.0
 
-- **Lire le chapitre :** [PDF CH02 v2.2](chapters/CH02/Trading_Intelligent_CH02_Dependance_Temporelle_ARIMA_Tawfik_Masrour_v2.2.pdf)
-- **Fiche de référence :** [Formules & définitions essentielles](chapters/CH02/fiches/Trading_Intelligent_CH02_Fiche_Reference_Formules_Definitions_Tawfik_Masrour.pdf)
+- **Lire le chapitre :** [PDF CH02 v4.0](chapters/CH02/Trading_Intelligent_CH02_Dependance_Temporelle_ARIMA_Tawfik_Masrour_v4.0.pdf)
+- **Fiche de référence :** [Formules & définitions essentielles](chapters/CH02/fiches/Trading_Intelligent_CH02_Fiche_Reference_Formules_Definitions_Tawfik_Masrour_v4.0.pdf)
 - **Guide étudiant CH02 :** [CH02_STUDENT_GUIDE.md](docs/CH02_STUDENT_GUIDE.md)
-- **Dataset :** [TI_CH02_TS_Models_v1.csv](data/CH02/TI_CH02_TS_Models_v1.csv) — identifiant `TI_CH02_TS_MODELS_V1`
+- **Dataset :** [TI_CH02_TS_MODELS_V4.csv](data/CH02/TI_CH02_TS_MODELS_V4.csv) — identifiant `TI_CH02_TS_MODELS_V4`
 
-#### Laboratoire 1 — Stationnarité, ACF/PACF & diagnostic
+#### Laboratoire 1 — Voir la série, stationnarité & ACF
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/MasrourTawfik/Textra-edu/blob/trading-intelligent/notebooks/CH02/CH02_NB01_Stationarity_ACF_PACF_Tawfik_Masrour_STUDENT.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/MasrourTawfik/Textra-edu/blob/trading-intelligent/notebooks/CH02/CH02_NB01_Voir_Serie_Stationnarite_ACF_Tawfik_Masrour_STUDENT.ipynb)
 
-[Voir le notebook sur GitHub](notebooks/CH02/CH02_NB01_Stationarity_ACF_PACF_Tawfik_Masrour_STUDENT.ipynb)
+[Voir le notebook sur GitHub](notebooks/CH02/CH02_NB01_Voir_Serie_Stationnarite_ACF_Tawfik_Masrour_STUDENT.ipynb)
 
-#### Laboratoire 2 — ARIMA, diagnostics & prévision
+#### Laboratoire 2 — AR, MA, ARMA & ARIMA : mécanismes
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/MasrourTawfik/Textra-edu/blob/trading-intelligent/notebooks/CH02/CH02_NB02_ARIMA_Diagnostics_Forecasting_Tawfik_Masrour_STUDENT.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/MasrourTawfik/Textra-edu/blob/trading-intelligent/notebooks/CH02/CH02_NB02_AR_MA_ARIMA_Mecanismes_Tawfik_Masrour_STUDENT.ipynb)
 
-[Voir le notebook sur GitHub](notebooks/CH02/CH02_NB02_ARIMA_Diagnostics_Forecasting_Tawfik_Masrour_STUDENT.ipynb)
+[Voir le notebook sur GitHub](notebooks/CH02/CH02_NB02_AR_MA_ARIMA_Mecanismes_Tawfik_Masrour_STUDENT.ipynb)
+
+#### Laboratoire 3 — Saisonnalité, différenciation saisonnière & SARIMA
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/MasrourTawfik/Textra-edu/blob/trading-intelligent/notebooks/CH02/CH02_NB03_Saisonnalite_SARIMA_Tawfik_Masrour_STUDENT.ipynb)
+
+[Voir le notebook sur GitHub](notebooks/CH02/CH02_NB03_Saisonnalite_SARIMA_Tawfik_Masrour_STUDENT.ipynb)
 
 ### CH03 — Comprendre et prévoir le risque — v2.1
 
@@ -73,7 +79,7 @@ Ce dépôt est le **portail étudiant officiel** du cours *Trading Intelligent*.
 | Chapitre | Titre | État |
 |---|---|---:|
 | CH01 | Comprendre le marché et ses données | ✅ v2.1 |
-| CH02 | Comprendre la dépendance temporelle | ✅ v2.2 |
+| CH02 | Comprendre la dépendance temporelle | ✅ v4.0 |
 | CH03 | Comprendre et prévoir le risque | ✅ v2.1 |
 | CH04 | Exploiter les relations entre actifs | 🔜 |
 | CH05 | De l’économétrie au Machine Learning financier | 🔜 |

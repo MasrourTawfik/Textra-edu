@@ -40,11 +40,12 @@ jobs:
           CH01_NB2="notebooks/CH01/CH01_NB02_Returns_Adjustments_Data_Quality_Tawfik_Masrour_STUDENT.ipynb"
           CH01_CSV="data/CH01/TI_CH01_Market_Data_v1.csv"
 
-          CH02_PDF="chapters/CH02/Trading_Intelligent_CH02_Dependance_Temporelle_ARIMA_Tawfik_Masrour_v2.2.pdf"
-          CH02_FICHE="chapters/CH02/fiches/Trading_Intelligent_CH02_Fiche_Reference_Formules_Definitions_Tawfik_Masrour.pdf"
-          CH02_NB1="notebooks/CH02/CH02_NB01_Stationarity_ACF_PACF_Tawfik_Masrour_STUDENT.ipynb"
-          CH02_NB2="notebooks/CH02/CH02_NB02_ARIMA_Diagnostics_Forecasting_Tawfik_Masrour_STUDENT.ipynb"
-          CH02_CSV="data/CH02/TI_CH02_TS_Models_v1.csv"
+          CH02_PDF="chapters/CH02/Trading_Intelligent_CH02_Dependance_Temporelle_ARIMA_Tawfik_Masrour_v4.0.pdf"
+          CH02_FICHE="chapters/CH02/fiches/Trading_Intelligent_CH02_Fiche_Reference_Formules_Definitions_Tawfik_Masrour_v4.0.pdf"
+          CH02_NB1="notebooks/CH02/CH02_NB01_Voir_Serie_Stationnarite_ACF_Tawfik_Masrour_STUDENT.ipynb"
+          CH02_NB2="notebooks/CH02/CH02_NB02_AR_MA_ARIMA_Mecanismes_Tawfik_Masrour_STUDENT.ipynb"
+          CH02_NB3="notebooks/CH02/CH02_NB03_Saisonnalite_SARIMA_Tawfik_Masrour_STUDENT.ipynb"
+          CH02_CSV="data/CH02/TI_CH02_TS_MODELS_V4.csv"
 
           CH03_PDF="chapters/CH03/Trading_Intelligent_CH03_Volatilite_ARCH_GARCH_Tawfik_Masrour_v2.1.pdf"
           CH03_FICHE="chapters/CH03/fiches/Trading_Intelligent_CH03_Fiche_Reference_Formules_Definitions_Tawfik_Masrour.pdf"
@@ -64,6 +65,7 @@ jobs:
           test -s "$CH02_FICHE"
           test -s "$CH02_NB1"
           test -s "$CH02_NB2"
+          test -s "$CH02_NB3"
           test -s "$CH02_CSV"
           test -s chapters/CH02/README.md
           test -s data/CH02/README.md
@@ -125,8 +127,9 @@ jobs:
 
           CH01_NB1_NAME="CH01_NB01_Market_Data_OHLCV_Microstructure_Tawfik_Masrour_STUDENT.ipynb"
           CH01_NB2_NAME="CH01_NB02_Returns_Adjustments_Data_Quality_Tawfik_Masrour_STUDENT.ipynb"
-          CH02_NB1_NAME="CH02_NB01_Stationarity_ACF_PACF_Tawfik_Masrour_STUDENT.ipynb"
-          CH02_NB2_NAME="CH02_NB02_ARIMA_Diagnostics_Forecasting_Tawfik_Masrour_STUDENT.ipynb"
+          CH02_NB1_NAME="CH02_NB01_Voir_Serie_Stationnarite_ACF_Tawfik_Masrour_STUDENT.ipynb"
+          CH02_NB2_NAME="CH02_NB02_AR_MA_ARIMA_Mecanismes_Tawfik_Masrour_STUDENT.ipynb"
+          CH02_NB3_NAME="CH02_NB03_Saisonnalite_SARIMA_Tawfik_Masrour_STUDENT.ipynb"
           CH03_NB1_NAME="CH03_NB01_ARCH_GARCH_Diagnostics_Tawfik_Masrour_STUDENT.ipynb"
           CH03_NB2_NAME="CH03_NB02_Asymmetry_VaR_ES_Tawfik_Masrour_STUDENT.ipynb"
 
@@ -134,6 +137,7 @@ jobs:
           CH01_RAW2="https://raw.githubusercontent.com/MasrourTawfik/Textra-edu/trading-intelligent/notebooks/CH01/$CH01_NB2_NAME"
           CH02_RAW1="https://raw.githubusercontent.com/MasrourTawfik/Textra-edu/trading-intelligent/notebooks/CH02/$CH02_NB1_NAME"
           CH02_RAW2="https://raw.githubusercontent.com/MasrourTawfik/Textra-edu/trading-intelligent/notebooks/CH02/$CH02_NB2_NAME"
+          CH02_RAW3="https://raw.githubusercontent.com/MasrourTawfik/Textra-edu/trading-intelligent/notebooks/CH02/$CH02_NB3_NAME"
           CH03_RAW1="https://raw.githubusercontent.com/MasrourTawfik/Textra-edu/trading-intelligent/notebooks/CH03/$CH03_NB1_NAME"
           CH03_RAW2="https://raw.githubusercontent.com/MasrourTawfik/Textra-edu/trading-intelligent/notebooks/CH03/$CH03_NB2_NAME"
 
@@ -141,6 +145,7 @@ jobs:
           CH01_COLAB2="https://colab.research.google.com/github/MasrourTawfik/Textra-edu/blob/trading-intelligent/notebooks/CH01/$CH01_NB2_NAME"
           CH02_COLAB1="https://colab.research.google.com/github/MasrourTawfik/Textra-edu/blob/trading-intelligent/notebooks/CH02/$CH02_NB1_NAME"
           CH02_COLAB2="https://colab.research.google.com/github/MasrourTawfik/Textra-edu/blob/trading-intelligent/notebooks/CH02/$CH02_NB2_NAME"
+          CH02_COLAB3="https://colab.research.google.com/github/MasrourTawfik/Textra-edu/blob/trading-intelligent/notebooks/CH02/$CH02_NB3_NAME"
           CH03_COLAB1="https://colab.research.google.com/github/MasrourTawfik/Textra-edu/blob/trading-intelligent/notebooks/CH03/$CH03_NB1_NAME"
           CH03_COLAB2="https://colab.research.google.com/github/MasrourTawfik/Textra-edu/blob/trading-intelligent/notebooks/CH03/$CH03_NB2_NAME"
 
@@ -148,6 +153,7 @@ jobs:
           curl --fail --silent --show-error --location --retry 3 "$CH01_RAW2" -o /tmp/ch01_nb02.ipynb
           curl --fail --silent --show-error --location --retry 3 "$CH02_RAW1" -o /tmp/ch02_nb01.ipynb
           curl --fail --silent --show-error --location --retry 3 "$CH02_RAW2" -o /tmp/ch02_nb02.ipynb
+          curl --fail --silent --show-error --location --retry 3 "$CH02_RAW3" -o /tmp/ch02_nb03.ipynb
           curl --fail --silent --show-error --location --retry 3 "$CH03_RAW1" -o /tmp/ch03_nb01.ipynb
           curl --fail --silent --show-error --location --retry 3 "$CH03_RAW2" -o /tmp/ch03_nb02.ipynb
 
@@ -159,6 +165,7 @@ jobs:
               "/tmp/ch01_nb02.ipynb",
               "/tmp/ch02_nb01.ipynb",
               "/tmp/ch02_nb02.ipynb",
+              "/tmp/ch02_nb03.ipynb",
               "/tmp/ch03_nb01.ipynb",
               "/tmp/ch03_nb02.ipynb",
           ]
@@ -174,6 +181,7 @@ jobs:
           c12="$(curl --silent --show-error --location --retry 3 --output /tmp/ch01_colab2.html --write-out '%{http_code}' "$CH01_COLAB2")"
           c21="$(curl --silent --show-error --location --retry 3 --output /tmp/ch02_colab1.html --write-out '%{http_code}' "$CH02_COLAB1")"
           c22="$(curl --silent --show-error --location --retry 3 --output /tmp/ch02_colab2.html --write-out '%{http_code}' "$CH02_COLAB2")"
+          c23="$(curl --silent --show-error --location --retry 3 --output /tmp/ch02_colab3.html --write-out '%{http_code}' "$CH02_COLAB3")"
           c31="$(curl --silent --show-error --location --retry 3 --output /tmp/ch03_colab1.html --write-out '%{http_code}' "$CH03_COLAB1")"
           c32="$(curl --silent --show-error --location --retry 3 --output /tmp/ch03_colab2.html --write-out '%{http_code}' "$CH03_COLAB2")"
 
@@ -181,6 +189,7 @@ jobs:
           test "$c12" = "200"
           test "$c21" = "200"
           test "$c22" = "200"
+          test "$c23" = "200"
           test "$c31" = "200"
           test "$c32" = "200"
 
@@ -188,6 +197,7 @@ jobs:
           test -s /tmp/ch01_colab2.html
           test -s /tmp/ch02_colab1.html
           test -s /tmp/ch02_colab2.html
+          test -s /tmp/ch02_colab3.html
           test -s /tmp/ch03_colab1.html
           test -s /tmp/ch03_colab2.html
 
@@ -195,6 +205,7 @@ jobs:
           echo "CH01 NB02 Colab HTTP: $c12"
           echo "CH02 NB01 Colab HTTP: $c21"
           echo "CH02 NB02 Colab HTTP: $c22"
+          echo "CH02 NB03 Colab HTTP: $c23"
           echo "CH03 NB01 Colab HTTP: $c31"
           echo "CH03 NB02 Colab HTTP: $c32"
 
@@ -231,7 +242,7 @@ jobs:
         run: |
           set -euo pipefail
           jupyter nbconvert --to notebook --execute \
-            notebooks/CH02/CH02_NB01_Stationarity_ACF_PACF_Tawfik_Masrour_STUDENT.ipynb \
+            notebooks/CH02/CH02_NB01_Voir_Serie_Stationnarite_ACF_Tawfik_Masrour_STUDENT.ipynb \
             --ExecutePreprocessor.timeout=300 \
             --output /tmp/CH02_NB01_STUDENT_EXECUTED.ipynb
 
@@ -240,9 +251,18 @@ jobs:
         run: |
           set -euo pipefail
           jupyter nbconvert --to notebook --execute \
-            notebooks/CH02/CH02_NB02_ARIMA_Diagnostics_Forecasting_Tawfik_Masrour_STUDENT.ipynb \
+            notebooks/CH02/CH02_NB02_AR_MA_ARIMA_Mecanismes_Tawfik_Masrour_STUDENT.ipynb \
             --ExecutePreprocessor.timeout=300 \
             --output /tmp/CH02_NB02_STUDENT_EXECUTED.ipynb
+
+      - name: Run all — CH02 NB03
+        shell: bash
+        run: |
+          set -euo pipefail
+          jupyter nbconvert --to notebook --execute \
+            notebooks/CH02/CH02_NB03_Saisonnalite_SARIMA_Tawfik_Masrour_STUDENT.ipynb \
+            --ExecutePreprocessor.timeout=300 \
+            --output /tmp/CH02_NB03_STUDENT_EXECUTED.ipynb
 
       - name: Run all — CH03 NB01
         shell: bash

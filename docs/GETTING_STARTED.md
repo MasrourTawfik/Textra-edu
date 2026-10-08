@@ -16,19 +16,20 @@ Le parcours publié comprend actuellement **CH01 v2.1**, **CH02 v2.2** et **CH03
 
 ## CH02 — Comprendre la dépendance temporelle
 
-Après CH01, CH02 introduit la dynamique temporelle : stationnarité, bruit blanc, ACF/PACF, AR, MA, ARMA, différenciation, tests ADF/PP/KPSS, ARIMA, diagnostics et prévision hors échantillon.
+CH02 v4.0 reconstruit les séries temporelles depuis les phénomènes observables : tendance, saisonnalité, bruit, stationnarité, mémoire, AR/MA/ARMA, racines unitaires, ARIMA puis SARIMA.
 
-1. Commencez par le [PDF du CH02](../chapters/CH02/Trading_Intelligent_CH02_Dependance_Temporelle_ARIMA_Tawfik_Masrour_v2.2.pdf).
-2. Gardez à proximité la [fiche de référence — formules & définitions](../chapters/CH02/fiches/Trading_Intelligent_CH02_Fiche_Reference_Formules_Definitions_Tawfik_Masrour.pdf).
-3. Exécutez **NB01** pour stationnarité, ACF/PACF, différenciation et diagnostic.
-4. Revenez au chapitre pour ARIMA, Box–Jenkins, diagnostics des résidus et prévision.
-5. Exécutez **NB02** pour comparer persistance, drift et ARIMA sur une même fenêtre future.
-6. Le dataset de référence est [TI_CH02_TS_Models_v1.csv](../data/CH02/TI_CH02_TS_Models_v1.csv), identifiant `TI_CH02_TS_MODELS_V1`.
+1. Commencez par le [PDF du CH02](../chapters/CH02/Trading_Intelligent_CH02_Dependance_Temporelle_ARIMA_Tawfik_Masrour_v4.0.pdf).
+2. Gardez la [fiche de référence](../chapters/CH02/fiches/Trading_Intelligent_CH02_Fiche_Reference_Formules_Definitions_Tawfik_Masrour_v4.0.pdf) à proximité.
+3. Exécutez **NB01** après les sections sur anatomie d'une série, stationnarité et ACF.
+4. Exécutez **NB02** après AR, MA, PACF, ARMA et ARIMA.
+5. Exécutez **NB03** après la section saisonnalité/SARIMA.
+6. Le dataset de référence est [TI_CH02_TS_MODELS_V4.csv](../data/CH02/TI_CH02_TS_MODELS_V4.csv), identifiant `TI_CH02_TS_MODELS_V4`.
 
 ### Google Colab — CH02
 
-- [NB01 — Stationnarité, ACF/PACF & diagnostic](https://colab.research.google.com/github/MasrourTawfik/Textra-edu/blob/trading-intelligent/notebooks/CH02/CH02_NB01_Stationarity_ACF_PACF_Tawfik_Masrour_STUDENT.ipynb)
-- [NB02 — ARIMA, diagnostics & prévision](https://colab.research.google.com/github/MasrourTawfik/Textra-edu/blob/trading-intelligent/notebooks/CH02/CH02_NB02_ARIMA_Diagnostics_Forecasting_Tawfik_Masrour_STUDENT.ipynb)
+- [NB01 — Voir la série, stationnarité & ACF](https://colab.research.google.com/github/MasrourTawfik/Textra-edu/blob/trading-intelligent/notebooks/CH02/CH02_NB01_Voir_Serie_Stationnarite_ACF_Tawfik_Masrour_STUDENT.ipynb)
+- [NB02 — AR, MA, ARMA & ARIMA](https://colab.research.google.com/github/MasrourTawfik/Textra-edu/blob/trading-intelligent/notebooks/CH02/CH02_NB02_AR_MA_ARIMA_Mecanismes_Tawfik_Masrour_STUDENT.ipynb)
+- [NB03 — Saisonnalité & SARIMA](https://colab.research.google.com/github/MasrourTawfik/Textra-edu/blob/trading-intelligent/notebooks/CH02/CH02_NB03_Saisonnalite_SARIMA_Tawfik_Masrour_STUDENT.ipynb)
 
 ## CH03 — Comprendre et prévoir le risque
 

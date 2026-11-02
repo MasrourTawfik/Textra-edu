@@ -1,6 +1,6 @@
 # Démarrage rapide — Trading Intelligent
 
-Le parcours publié comprend actuellement **CH01 v2.1**, **CH02 v2.2** et **CH03 v2.1**. Il est recommandé de les suivre dans cet ordre.
+Le parcours publié comprend actuellement **CH01 v2.1**, **CH02 v4.0** et **CH03 v3.0**. Il est recommandé de les suivre dans cet ordre.
 
 ## CH01 — Comprendre le marché et ses données
 
@@ -35,14 +35,18 @@ CH02 v4.0 reconstruit les séries temporelles depuis les phénomènes observable
 
 Après CH02, CH03 passe de la dynamique de la moyenne à celle du risque : clustering de volatilité, ARCH, GARCH, persistance, distributions à queues épaisses, asymétrie, prévisions de volatilité, VaR, Expected Shortfall et backtesting.
 
-1. Commencez par le [PDF du CH03](../chapters/CH03/Trading_Intelligent_CH03_Volatilite_ARCH_GARCH_Tawfik_Masrour_v2.1.pdf).
+1. Commencez par le [PDF progressif du CH03 v3.0](../chapters/CH03/Trading_Intelligent_CH03_Cours_Progressif_Tawfik_Masrour_v3.0.pdf).
 2. Gardez à proximité la [fiche de référence — formules & définitions](../chapters/CH03/fiches/Trading_Intelligent_CH03_Fiche_Reference_Formules_Definitions_Tawfik_Masrour.pdf).
-3. Exécutez **NB01** pour ARCH-LM, GARCH(1,1), persistance et diagnostics.
+3. Exécutez le [laboratoire intégral CH03](../notebooks/CH03/CH03_Laboratoire_Integral_Volatilite_Risque_Tawfik_Masrour_STUDENT.ipynb) : 38 expériences, 46 cellules Python, accompagnées d'explications Markdown progressives.
 4. Revenez au chapitre pour Student-t, asymétrie, GJR-GARCH et prévisions.
 5. Exécutez **NB02** sur la séparation chronologique train/test et l'évaluation hors échantillon de VaR/ES.
 6. Le dataset de référence est [TI_CH03_Vol_Risk_v1.csv](../data/CH03/TI_CH03_Vol_Risk_v1.csv), identifiant `TI_CH03_VOL_RISK_V1`.
 
 ### Google Colab — CH03
+
+- [Laboratoire intégral CH03 v3.0](https://colab.research.google.com/github/MasrourTawfik/Textra-edu/blob/trading-intelligent/notebooks/CH03/CH03_Laboratoire_Integral_Volatilite_Risque_Tawfik_Masrour_STUDENT.ipynb)
+
+Les notebooks NB01/NB02 et le PDF CH03 v2.1 sont conservés comme ressources historiques.
 
 - [NB01 — ARCH/GARCH & diagnostics](https://colab.research.google.com/github/MasrourTawfik/Textra-edu/blob/trading-intelligent/notebooks/CH03/CH03_NB01_ARCH_GARCH_Diagnostics_Tawfik_Masrour_STUDENT.ipynb)
 - [NB02 — Asymétrie, VaR & ES](https://colab.research.google.com/github/MasrourTawfik/Textra-edu/blob/trading-intelligent/notebooks/CH03/CH03_NB02_Asymmetry_VaR_ES_Tawfik_Masrour_STUDENT.ipynb)

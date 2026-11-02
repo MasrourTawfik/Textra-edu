@@ -1,0 +1,70 @@
+name: Validate CH03 integral laboratory v3.0
+
+on:
+  push:
+    branches:
+      - ch03-v3.0-student-staging-20261102
+      - trading-intelligent
+    paths:
+      - 'chapters/CH03/**'
+      - 'notebooks/CH03/**'
+      - 'data/CH03/**'
+      - 'docs/CH03_*'
+      - '.github/workflows/validate-ch03-integral.yml'
+      - 'README.md'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-ch03-integral:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check required resources and confidentiality
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -s chapters/CH03/Trading_Intelligent_CH03_Cours_Progressif_Tawfik_Masrour_v3.0.pdf
+          test -s notebooks/CH03/CH03_Laboratoire_Integral_Volatilite_Risque_Tawfik_Masrour_STUDENT.ipynb
+          test -s data/CH03/TI_CH03_LAB_MARCHE_SYNTHETIQUE_V1.csv
+          test -s data/CH03/TI_CH03_LAB_SCENARIOS_MANUELS_V1.csv
+          test -s docs/CH03_LAB_DEMARRAGE.md
+          test -s docs/CH03_LAB_CORRESPONDANCE.md
+          if find chapters/CH03 notebooks/CH03 data/CH03 docs -type f \( -iname '*MASTER*' -o -iname '*corrige*' -o -iname '*solution*' -o -iname '*.tex' -o -iname '*.zip' \) | grep -q .; then
+            echo 'PRIVACY ERROR: instructor or source material in student repository' >&2
+            exit 1
+          fi
+          if grep -R -I -nE 'sandbox:|/mnt/data/|C:\\Users\\|C:/Users/' chapters/CH03 notebooks/CH03 data/CH03 docs; then
+            echo 'PRIVACY ERROR: local file path detected' >&2
+            exit 1
+          fi
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install runtime
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r docs/CH03_LAB_REQUIREMENTS.txt ipykernel
+      - name: Check STUDENT metadata and execute entire notebook
+        shell: bash
+        run: |
+          python - <<'PYCODE'
+          from pathlib import Path
+          import nbformat
+          from nbclient import NotebookClient
+          path=Path('notebooks/CH03/CH03_Laboratoire_Integral_Volatilite_Risque_Tawfik_Masrour_STUDENT.ipynb')
+          nb=nbformat.read(str(path),as_version=4)
+          nbformat.validate(nb)
+          code=[c for c in nb.cells if c.cell_type=='code']
+          assert len(code)==46, f'Expected 46 executable cells, got {len(code)}'
+          assert all(not c.get('outputs') and c.get('execution_count') is None for c in code), 'STUDENT notebook includes executed outputs'
+          all_sources='\n'.join(''.join(c.source) for c in nb.cells)
+          assert 'Correction et mise en perspective (édition MASTER)' not in all_sources
+          assert 'Réponse raisonnée, MASTER' not in all_sources
+          NotebookClient(nb,timeout=300,kernel_name='python3',allow_errors=False).execute()
+          assert all(c.get('execution_count') is not None for c in nb.cells if c.cell_type=='code')
+          print('PASS 46 code cells executed successfully')
+          PYCODE

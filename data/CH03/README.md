@@ -1,10 +1,13 @@
-# Dataset CH03
+# Données CH03
 
-- **Identifiant pédagogique :** `TI_CH03_VOL_RISK_V1`
-- **Fichier :** `TI_CH03_Vol_Risk_v1.csv`
-- **Nature :** synthétique, déterministe et pédagogique ; il ne s'agit pas d'une série issue d'un marché réel.
-- **Usage :** diagnostics de volatilité, ARCH/GARCH, asymétrie, prévision conditionnelle et évaluation VaR/ES.
+## Nouveau laboratoire intégral 1.0 — CH03 pédagogique v3.0
 
-Le fichier contient notamment les rendements, le prix synthétique et des variables nécessaires aux expériences du chapitre. La variable `true_sigma` sert uniquement d'oracle pédagogique pour l'évaluation : elle ne doit pas être utilisée comme une variable explicative réaliste disponible sur un marché.
+- `TI_CH03_LAB_MARCHE_SYNTHETIQUE_V1.csv` : marché simulé, 2 400 séances. La variance latente y est connue, ce qui permet des contrôles scientifiques pédagogiques impossibles à réaliser ainsi avec des données réelles.
+- `TI_CH03_LAB_SCENARIOS_MANUELS_V1.csv` : exemples de calcul à la main.
+- `DATA_DICTIONARY.md` : colonnes, unités et mécanismes.
 
-Les notebooks CH03 chargent ce fichier lorsqu'il est disponible. Ils disposent également d'un mécanisme de reconstruction déterministe afin de rester exécutables dans un environnement Colab propre.
+## Ressource antérieure conservée
+
+`TI_CH03_Vol_Risk_v1.csv` reste disponible pour les laboratoires v2.1.
+
+Ces données sont synthétiques, sans valeur prévisionnelle pour un marché réel.

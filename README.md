@@ -60,7 +60,6 @@ Ce dépôt est le **portail étudiant officiel** du cours *Trading Intelligent*.
 - **[Laboratoire intégral STUDENT — 38 expériences](notebooks/CH03/CH03_Laboratoire_Integral_Volatilite_Risque_Tawfik_Masrour_STUDENT.ipynb)**
 - [Ouvrir le laboratoire dans Google Colab](https://colab.research.google.com/github/MasrourTawfik/Textra-edu/blob/trading-intelligent/notebooks/CH03/CH03_Laboratoire_Integral_Volatilite_Risque_Tawfik_Masrour_STUDENT.ipynb)
 - [Guide étudiant](docs/CH03_STUDENT_GUIDE.md) · [Dataset synthétique](data/CH03/TI_CH03_LAB_MARCHE_SYNTHETIQUE_V1.csv)
-- [Édition historique CH03 v2.1](chapters/CH03/Trading_Intelligent_CH03_Volatilite_ARCH_GARCH_Tawfik_Masrour_v2.1.pdf), anciens laboratoires NB01 et NB02 conservés.
 
 ---
 

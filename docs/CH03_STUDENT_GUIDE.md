@@ -8,4 +8,4 @@ Le cours PDF, le notebook intégral et ses deux jeux de données sont accessible
 4. Exécuter les cellules dans l'ordre. Tous les jeux de données essentiels peuvent être générés directement par le notebook.
 5. Répondre aux arrêts de compréhension et conclure par une note de décision financière argumentée.
 
-**Important :** les données sont simulées ; tous les résultats sont exclusivement pédagogiques. Les anciens NB01 et NB02 et leur dataset restent accessibles pour comparaison.
+**Important :** les données sont simulées ; tous les résultats sont exclusivement pédagogiques. Le parcours CH03 actuel repose sur le laboratoire intégral et ses deux jeux de données synthétiques.

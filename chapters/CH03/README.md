@@ -16,9 +16,6 @@ Le chapitre se construit depuis les rendements, la notion de surprise, les proba
 
 Le notebook STUDENT est autonome, sans corrigés ou sorties exécutées. **Les données sont exclusivement synthétiques** et le laboratoire ne fournit aucune recommandation de trading.
 
-## Archives et ressources historiques préservées
+## Version active
 
-- [CH03 v2.1 (PDF)](Trading_Intelligent_CH03_Volatilite_ARCH_GARCH_Tawfik_Masrour_v2.1.pdf)
-- [Fiche de référence v2.1](fiches/Trading_Intelligent_CH03_Fiche_Reference_Formules_Definitions_Tawfik_Masrour.pdf)
-- [NB01 v2.1 — ARCH/GARCH](../../notebooks/CH03/CH03_NB01_ARCH_GARCH_Diagnostics_Tawfik_Masrour_STUDENT.ipynb)
-- [NB02 v2.1 — asymétrie, VaR et ES](../../notebooks/CH03/CH03_NB02_Asymmetry_VaR_ES_Tawfik_Masrour_STUDENT.ipynb)
+CH03 v3.0 et son laboratoire intégral constituent les seules ressources actives de ce chapitre. Les états antérieurs restent accessibles par les branches de sauvegarde Git, sans alourdir le portail étudiant.

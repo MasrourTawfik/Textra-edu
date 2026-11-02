@@ -6,8 +6,4 @@
 - `TI_CH03_LAB_SCENARIOS_MANUELS_V1.csv` : exemples de calcul à la main.
 - `DATA_DICTIONARY.md` : colonnes, unités et mécanismes.
 
-## Ressource antérieure conservée
-
-`TI_CH03_Vol_Risk_v1.csv` reste disponible pour les laboratoires v2.1.
-
-Ces données sont synthétiques, sans valeur prévisionnelle pour un marché réel.
+Les deux jeux de données ci-dessus sont les seules ressources actives de CH03. Ils sont synthétiques, sans valeur prévisionnelle pour un marché réel.

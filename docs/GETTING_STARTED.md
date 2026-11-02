@@ -33,23 +33,18 @@ CH02 v4.0 reconstruit les séries temporelles depuis les phénomènes observable
 
 ## CH03 — Comprendre et prévoir le risque
 
-Après CH02, CH03 passe de la dynamique de la moyenne à celle du risque : clustering de volatilité, ARCH, GARCH, persistance, distributions à queues épaisses, asymétrie, prévisions de volatilité, VaR, Expected Shortfall et backtesting.
+Après CH02, CH03 passe de la prévision du rendement moyen à la modélisation du risque : variance conditionnelle, regroupement de volatilité, ARCH/GARCH, queues épaisses, asymétries, VaR, Expected Shortfall et backtesting.
 
-1. Commencez par le [PDF progressif du CH03 v3.0](../chapters/CH03/Trading_Intelligent_CH03_Cours_Progressif_Tawfik_Masrour_v3.0.pdf).
-2. Gardez à proximité la [fiche de référence — formules & définitions](../chapters/CH03/fiches/Trading_Intelligent_CH03_Fiche_Reference_Formules_Definitions_Tawfik_Masrour.pdf).
-3. Exécutez le [laboratoire intégral CH03](../notebooks/CH03/CH03_Laboratoire_Integral_Volatilite_Risque_Tawfik_Masrour_STUDENT.ipynb) : 38 expériences, 46 cellules Python, accompagnées d'explications Markdown progressives.
-4. Revenez au chapitre pour Student-t, asymétrie, GJR-GARCH et prévisions.
-5. Exécutez **NB02** sur la séparation chronologique train/test et l'évaluation hors échantillon de VaR/ES.
-6. Le dataset de référence est [TI_CH03_Vol_Risk_v1.csv](../data/CH03/TI_CH03_Vol_Risk_v1.csv), identifiant `TI_CH03_VOL_RISK_V1`.
+1. Lire le [cours progressif CH03 v3.0](../chapters/CH03/Trading_Intelligent_CH03_Cours_Progressif_Tawfik_Masrour_v3.0.pdf).
+2. Consulter le [guide pédagogique du laboratoire](CH03_LAB_DEMARRAGE.md) et la [correspondance cours-expériences](CH03_LAB_CORRESPONDANCE.md).
+3. Exécuter le [laboratoire intégral STUDENT](../notebooks/CH03/CH03_Laboratoire_Integral_Volatilite_Risque_Tawfik_Masrour_STUDENT.ipynb) : 38 expériences et 46 cellules Python, avec explications Markdown guidées.
+4. Utiliser les données [marché synthétique](../data/CH03/TI_CH03_LAB_MARCHE_SYNTHETIQUE_V1.csv) et [scénarios manuels](../data/CH03/TI_CH03_LAB_SCENARIOS_MANUELS_V1.csv), décrites dans le [dictionnaire](../data/CH03/DATA_DICTIONARY.md).
+5. Préparer la note de décision financière argumentée proposée en fin de laboratoire.
 
 ### Google Colab — CH03
 
-- [Laboratoire intégral CH03 v3.0](https://colab.research.google.com/github/MasrourTawfik/Textra-edu/blob/trading-intelligent/notebooks/CH03/CH03_Laboratoire_Integral_Volatilite_Risque_Tawfik_Masrour_STUDENT.ipynb)
+- [Ouvrir le laboratoire intégral](https://colab.research.google.com/github/MasrourTawfik/Textra-edu/blob/trading-intelligent/notebooks/CH03/CH03_Laboratoire_Integral_Volatilite_Risque_Tawfik_Masrour_STUDENT.ipynb)
 
-Les notebooks NB01/NB02 et le PDF CH03 v2.1 sont conservés comme ressources historiques.
-
-- [NB01 — ARCH/GARCH & diagnostics](https://colab.research.google.com/github/MasrourTawfik/Textra-edu/blob/trading-intelligent/notebooks/CH03/CH03_NB01_ARCH_GARCH_Diagnostics_Tawfik_Masrour_STUDENT.ipynb)
-- [NB02 — Asymétrie, VaR & ES](https://colab.research.google.com/github/MasrourTawfik/Textra-edu/blob/trading-intelligent/notebooks/CH03/CH03_NB02_Asymmetry_VaR_ES_Tawfik_Masrour_STUDENT.ipynb)
 ## Exécution dans Colab
 
 Dans Colab, utilisez **Runtime → Run all**.

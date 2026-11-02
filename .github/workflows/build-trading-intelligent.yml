@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - trading-intelligent
+      - 'ch03-v3-cleanup-*'
     paths:
       - "README.md"
       - "chapters/CH01/**"

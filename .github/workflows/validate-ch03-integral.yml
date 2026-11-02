@@ -5,6 +5,7 @@ on:
     branches:
       - ch03-v3.0-student-staging-20261102
       - trading-intelligent
+      - 'ch03-v3-cleanup-*'
     paths:
       - 'chapters/CH03/**'
       - 'notebooks/CH03/**'

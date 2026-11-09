@@ -1,0 +1,80 @@
+name: Validate CH04 pedagogical laboratory v2.0
+
+on:
+  push:
+    branches:
+      - trading-intelligent
+    paths:
+      - 'chapters/CH04/**'
+      - 'notebooks/CH04/**'
+      - 'data/CH04/**'
+      - 'docs/CH04_*'
+      - '.github/workflows/validate-ch04-integral.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-ch04:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check files and separation of student/instructor editions
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -s chapters/CH04/Trading_Intelligent_CH04_Relations_Actifs_Cointegration_Pairs_Trading_Tawfik_Masrour_v2.0.pdf
+          test -s notebooks/CH04/CH04_NB01_Relations_Cointegration_STUDENT.ipynb
+          test -s notebooks/CH04/CH04_NB02_Pairs_Trading_Chronologique_STUDENT.ipynb
+          test -s data/CH04/CH04_LAB_SYNTHETIQUE_V2.csv
+          test -s docs/CH04_STUDENT_GUIDE.md
+          if find chapters/CH04 notebooks/CH04 data/CH04 -type f \( -iname '*MASTER*' -o -iname '*corrige*' -o -iname '*solution*' -o -iname '*.tex' -o -iname '*.zip' \) | grep -q .; then
+            echo 'PRIVATE MATERIAL DETECTED in student CH04' >&2
+            exit 1
+          fi
+          if grep -R -I -nE 'sandbox:|/mnt/data/|C:\\Users\\|C:/Users/' chapters/CH04 notebooks/CH04 data/CH04 docs/CH04_*; then
+            echo 'LOCAL PATH DETECTED in student CH04' >&2
+            exit 1
+          fi
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install notebook and validation dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r docs/CH04_LAB_REQUIREMENTS.txt ipykernel pypdf
+      - name: Validate PDF, synthetic dataset, and run two STUDENT notebooks
+        shell: bash
+        run: |
+          python - <<'PYCODE'
+          from pathlib import Path
+          import pandas as pd
+          import nbformat
+          from nbclient import NotebookClient
+          from pypdf import PdfReader
+
+          root=Path('.')
+          pdf=root/'chapters/CH04/Trading_Intelligent_CH04_Relations_Actifs_Cointegration_Pairs_Trading_Tawfik_Masrour_v2.0.pdf'
+          assert len(PdfReader(str(pdf)).pages)==69, 'CH04 PDF must contain 69 pages'
+          df=pd.read_csv(root/'data/CH04/CH04_LAB_SYNTHETIQUE_V2.csv')
+          assert len(df)==700, 'Expected 700 synthetic sessions'
+          assert {'date','log_A','log_B_C','log_B_N','log_B_R','open_A','open_B_C'}.issubset(df.columns)
+          for filename in (
+              'CH04_NB01_Relations_Cointegration_STUDENT.ipynb',
+              'CH04_NB02_Pairs_Trading_Chronologique_STUDENT.ipynb',
+          ):
+              path=root/'notebooks/CH04'/filename
+              nb=nbformat.read(path, as_version=4)
+              nbformat.validate(nb)
+              assert nb.metadata.get('course',{}).get('edition')=='STUDENT', filename
+              code=[c for c in nb.cells if c.cell_type=='code']
+              assert code and all(not c.get('outputs') and c.get('execution_count') is None for c in code), filename
+              source='\n'.join(c.source for c in nb.cells)
+              assert 'Corrigé enseignant et vérifications supplémentaires' not in source, filename
+              assert 'Corrigé enseignant et audits de causalité' not in source, filename
+              NotebookClient(nb,timeout=240,kernel_name='python3',allow_errors=False).execute()
+              assert all(c.execution_count is not None for c in code), filename
+              print('PASS', filename, 'code cells:',len(code))
+          PYCODE

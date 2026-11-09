@@ -63,6 +63,24 @@ Ce dépôt est le **portail étudiant officiel** du cours *Trading Intelligent*.
 
 ---
 
+### CH04 — Exploiter les relations entre actifs : corrélation, cointégration et pairs trading — v2.0
+
+- **[Lire le cours CH04 complet — 69 pages](chapters/CH04/Trading_Intelligent_CH04_Relations_Actifs_Cointegration_Pairs_Trading_Tawfik_Masrour_v2.0.pdf)**
+- **[Guide étudiant CH04](docs/CH04_STUDENT_GUIDE.md)**
+- **[Dataset synthétique CH04](data/CH04/CH04_LAB_SYNTHETIQUE_V2.csv)**
+
+#### Laboratoire 1 — Relations et cointégration
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/MasrourTawfik/Textra-edu/blob/trading-intelligent/notebooks/CH04/CH04_NB01_Relations_Cointegration_STUDENT.ipynb)
+[Voir le notebook NB01](notebooks/CH04/CH04_NB01_Relations_Cointegration_STUDENT.ipynb)
+
+#### Laboratoire 2 — Pairs trading chronologique et backtest
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/MasrourTawfik/Textra-edu/blob/trading-intelligent/notebooks/CH04/CH04_NB02_Pairs_Trading_Chronologique_STUDENT.ipynb)
+[Voir le notebook NB02](notebooks/CH04/CH04_NB02_Pairs_Trading_Chronologique_STUDENT.ipynb)
+
+*Les notebooks sont autonomes et utilisent des données synthétiques reproductibles. Aucun corrigé MASTER n'est distribué.*
+
+---
+
 ## Progression du cours
 
 | Chapitre | Titre | État |
@@ -70,7 +88,7 @@ Ce dépôt est le **portail étudiant officiel** du cours *Trading Intelligent*.
 | CH01 | Comprendre le marché et ses données | ✅ v2.1 |
 | CH02 | Comprendre la dépendance temporelle | ✅ v4.0 |
 | CH03 | Comprendre et prévoir le risque | ✅ v3.0 |
-| CH04 | Exploiter les relations entre actifs | 🔜 |
+| CH04 | Exploiter les relations entre actifs | ✅ v2.0 |
 | CH05 | De l’économétrie au Machine Learning financier | 🔜 |
 | CH06 | Apprendre sans regarder le futur | 🔜 |
 | CH07 | Du MLP aux modèles séquentiels | 🔜 |

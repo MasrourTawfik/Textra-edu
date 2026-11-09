@@ -1,0 +1,58 @@
+{
+  "seed": 42,
+  "observations_totales": 400,
+  "formation_observations": 320,
+  "test_observations": 80,
+  "version_statsmodels": "0.14.6",
+  "relation_generatrice": {
+    "alpha": -0.52,
+    "beta": 1.2,
+    "phi_residu": 0.64
+  },
+  "ADF_séries": [
+    {
+      "serie": "x",
+      "ADF_niveau_p": 0.32389444100761083,
+      "ADF_difference_p": 3.5696706749527715e-29
+    },
+    {
+      "serie": "y_c",
+      "ADF_niveau_p": 0.2777205789672958,
+      "ADF_difference_p": 7.520048592425337e-30
+    },
+    {
+      "serie": "y_noncointegree",
+      "ADF_niveau_p": 0.39128148706976273,
+      "ADF_difference_p": 1.1049636326434364e-29
+    }
+  ],
+  "relation_stationnaire": {
+    "OLS_alpha": -0.6152080356182794,
+    "OLS_beta": 1.2206046968357254,
+    "OLS_R2": 0.9839413073528065,
+    "EG_stat": -8.166773973086924,
+    "EG_p": 1.1489661604834539e-11,
+    "EG_critiques_1_5_10": [
+      -3.9311014429889646,
+      -3.355350967757785,
+      -3.057772027102721
+    ],
+    "correlation_rendements": 0.858225331006513
+  },
+  "relation_non_stationnaire": {
+    "OLS_alpha": -1.168645596917115,
+    "OLS_beta": 1.3313166562650758,
+    "OLS_R2": 0.881655751177004,
+    "EG_stat": -2.0454434998577193,
+    "EG_p": 0.5048897732371674,
+    "EG_critiques_1_5_10": [
+      -3.9311014429889646,
+      -3.355350967757785,
+      -3.057772027102721
+    ],
+    "ADF_naif_stat": -2.045443499857631,
+    "ADF_naif_p": 0.03907758898614277,
+    "ADF_naif_critique_5": -1.9418798247045137,
+    "correlation_rendements": 0.9044048590697364
+  }
+}

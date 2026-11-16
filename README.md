@@ -81,6 +81,17 @@ Ce dépôt est le **portail étudiant officiel** du cours *Trading Intelligent*.
 
 ---
 
+### CH05 — De l’économétrie au Machine Learning financier — v2.0
+
+- **[Manuel intégral (130 pages)](chapters/CH05/Trading_Intelligent_CH05_De_l_Econometrie_au_ML_Financier_Tawfik_Masrour_v2.0.pdf)**
+- [Guide étudiant](docs/CH05_STUDENT_GUIDE.md) · [Dataset synthétique](data/CH05/TI_CH05_SEC510_Synthese_v2.csv)
+- **NB01 — Régression et ML supervisé** : [Colab](https://colab.research.google.com/github/MasrourTawfik/Textra-edu/blob/trading-intelligent/notebooks/CH05/CH05_NB01_Regression_ML_Supervise_STUDENT.ipynb) · [Notebook](notebooks/CH05/CH05_NB01_Regression_ML_Supervise_STUDENT.ipynb)
+- **NB02 — Séries, fenêtres et ML financier** : [Colab](https://colab.research.google.com/github/MasrourTawfik/Textra-edu/blob/trading-intelligent/notebooks/CH05/CH05_NB02_Series_Fenetres_ML_Financier_STUDENT.ipynb) · [Notebook](notebooks/CH05/CH05_NB02_Series_Fenetres_ML_Financier_STUDENT.ipynb)
+
+*Données fictives reproductibles ; aucune prétention de rentabilité de marché. Seules les éditions STUDENT sont publiques.*
+
+---
+
 ## Progression du cours
 
 | Chapitre | Titre | État |
@@ -89,7 +100,7 @@ Ce dépôt est le **portail étudiant officiel** du cours *Trading Intelligent*.
 | CH02 | Comprendre la dépendance temporelle | ✅ v4.0 |
 | CH03 | Comprendre et prévoir le risque | ✅ v3.0 |
 | CH04 | Exploiter les relations entre actifs | ✅ v2.0 |
-| CH05 | De l’économétrie au Machine Learning financier | 🔜 |
+| CH05 | De l’économétrie au Machine Learning financier | ✅ v2.0 |
 | CH06 | Apprendre sans regarder le futur | 🔜 |
 | CH07 | Du MLP aux modèles séquentiels | 🔜 |
 | CH08 | De la prédiction à la décision et au portefeuille | 🔜 |

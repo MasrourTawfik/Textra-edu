@@ -1,0 +1,68 @@
+name: Validate CH05 v2.0 — manual and student laboratories
+
+on:
+  push:
+    branches: [trading-intelligent]
+    paths:
+      - 'chapters/CH05/**'
+      - 'notebooks/CH05/**'
+      - 'data/CH05/**'
+      - 'docs/CH05_*'
+      - '.github/workflows/validate-ch05-v2.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-ch05-v2:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Enforce public/private boundary and required artifacts
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -s chapters/CH05/Trading_Intelligent_CH05_De_l_Econometrie_au_ML_Financier_Tawfik_Masrour_v2.0.pdf
+          test -s notebooks/CH05/CH05_NB01_Regression_ML_Supervise_STUDENT.ipynb
+          test -s notebooks/CH05/CH05_NB02_Series_Fenetres_ML_Financier_STUDENT.ipynb
+          test -s data/CH05/TI_CH05_SEC510_Synthese_v2.csv
+          test -s docs/CH05_STUDENT_GUIDE.md
+          if find chapters/CH05 notebooks/CH05 data/CH05 -type f \( -iname '*MASTER*' -o -iname '*corrige*' -o -iname '*solution*' -o -iname '*.tex' -o -iname '*.zip' \) | grep -q .; then
+             echo 'Teacher-only material in public CH05' >&2; exit 1
+          fi
+          if grep -R -I -nE 'sandbox:|/mnt/data/|C:\\Users\\' chapters/CH05 notebooks/CH05 data/CH05 docs/CH05_*; then
+             echo 'Local path leak' >&2; exit 1
+          fi
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r docs/CH05_LAB_REQUIREMENTS.txt ipykernel nbclient nbformat pypdf
+      - name: PDF, data and both student notebooks, fully executable
+        shell: bash
+        run: |
+          python - <<'PYTEST'
+          from pathlib import Path
+          import pandas as pd
+          import nbformat
+          from nbclient import NotebookClient
+          from pypdf import PdfReader
+          pdf=Path('chapters/CH05/Trading_Intelligent_CH05_De_l_Econometrie_au_ML_Financier_Tawfik_Masrour_v2.0.pdf')
+          assert len(PdfReader(str(pdf)).pages)==130
+          df=pd.read_csv('data/CH05/TI_CH05_SEC510_Synthese_v2.csv')
+          assert len(df)==564 and 'cible_rendement_t1' in df.columns
+          for name in ['CH05_NB01_Regression_ML_Supervise_STUDENT.ipynb','CH05_NB02_Series_Fenetres_ML_Financier_STUDENT.ipynb']:
+              nb=nbformat.read(Path('notebooks/CH05')/name,as_version=4)
+              nbformat.validate(nb)
+              assert not any('instructor_only' in c.metadata.get('tags',[]) for c in nb.cells)
+              assert not any(c.cell_type=='code' and c.get('outputs') for c in nb.cells)
+              executed=NotebookClient(nb,timeout=180,kernel_name='python3',resources={'metadata':{'path':str(Path('notebooks/CH05').resolve())}}).execute()
+              errs=[o for c in executed.cells if c.cell_type=='code' for o in c.get('outputs',[]) if o.output_type=='error']
+              assert not errs,(name,errs)
+              print(name,'PASS',len(executed.cells),'cells')
+          print('CH05 v2 CI PASS')
+          PYTEST

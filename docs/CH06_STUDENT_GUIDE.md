@@ -1,4 +1,6 @@
 # Trading Intelligent — CH06 v2.0 — Guide étudiant
+
+[Manuel CH06 PDF (49 pages)](../chapters/CH06/Trading_Intelligent_CH06_Manuel_v1.0.pdf)
 ## Deux laboratoires complémentaires
 **G1 — Visite guidée** : comprendre les calculs d’un neurone et d'un MLP, les shapes (batch, temps, caractéristiques), les RNN, LSTM, GRU, puis les premières prévisions et décisions fictives. Le notebook G1 s'exécute intégralement sans modifier de cellules.
 **A2 — Atelier autonome** : partir d’une série univariée de 840 observations, construire ses fenêtres, sa séparation chronologique et des modèles MLP, RNN, GRU, LSTM ; comparer TRAIN/VALIDATION ; passer à 910 séances financières fictives et tester des décisions après coûts. A2 contient **11 exercices obligatoires**, avec tests automatiques, et s'arrête volontairement sur NotImplementedError jusqu'au remplissage des fonctions.

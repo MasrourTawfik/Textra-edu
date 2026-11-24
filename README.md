@@ -97,7 +97,11 @@ Ce dépôt est le **portail étudiant officiel** du cours *Trading Intelligent*.
 - [Laboratoires G1/A2 et ressources](chapters/CH06/README.md)
 - [Guide étudiant](docs/CH06_STUDENT_GUIDE.md)
 - [G1 sur Colab](https://colab.research.google.com/github/MasrourTawfik/Textra-edu/blob/trading-intelligent/notebooks/CH06/CH06_G1_Visite_Guidee_STUDENT.ipynb)
+  
+  [![Ouvrir dans Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/MasrourTawfik/Textra-edu/blob/trading-intelligent/notebooks/CH06/CH06_G1_Visite_Guidee_STUDENT.ipynb) — **Visite guidée STUDENT**
 - [A2 sur Colab](https://colab.research.google.com/github/MasrourTawfik/Textra-edu/blob/trading-intelligent/notebooks/CH06/CH06_A2_Modelisation_Autonome_STUDENT.ipynb)
+  
+  [![Ouvrir dans Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/MasrourTawfik/Textra-edu/blob/trading-intelligent/notebooks/CH06/CH06_A2_Modelisation_Autonome_STUDENT.ipynb) — **Défi autonome STUDENT**
 
 ---
 

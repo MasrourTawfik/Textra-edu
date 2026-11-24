@@ -1,0 +1,34 @@
+name: CH06 student notebooks — structural checks
+on:
+  push:
+    branches: [trading-intelligent]
+    paths:
+      - 'notebooks/CH06/**'
+      - 'data/CH06/**'
+      - 'docs/CH06_STUDENT_GUIDE.md'
+      - '.github/workflows/ch06-student-check.yml'
+  workflow_dispatch:
+jobs:
+  structure:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Check notebooks, datasets and confidentiality
+        run: |
+          python - <<'PY'
+          import json, csv
+          from pathlib import Path
+          base=Path('notebooks/CH06')
+          for n in ['CH06_G1_Visite_Guidee_STUDENT.ipynb','CH06_A2_Modelisation_Autonome_STUDENT.ipynb']:
+              obj=json.loads((base/n).read_text(encoding='utf-8'))
+              assert obj['nbformat']==4 and len(obj['cells'])>=50
+              assert all(not ('solution-master' in c.get('metadata',{}).get('tags',[])) for c in obj['cells'])
+          assert not list(base.glob('*MASTER*')), 'Private solutions in public notebooks directory'
+          for name,count in [('CH06_A2_UNIVARIE.csv',840),('CH06_A2_MARCHE_MULTI.csv',910)]:
+              with (Path('data/CH06')/name).open(newline='',encoding='utf-8') as fh:
+                  assert sum(1 for _ in csv.DictReader(fh))==count
+          print('CH06 structural checks passed')
+          PY

@@ -92,6 +92,14 @@ Ce dépôt est le **portail étudiant officiel** du cours *Trading Intelligent*.
 
 ---
 
+### CH06 — Deep Learning pour les séries temporelles — laboratoires v2.0
+- [Laboratoires G1/A2 et ressources](chapters/CH06/README.md)
+- [Guide étudiant](docs/CH06_STUDENT_GUIDE.md)
+- [G1 sur Colab](https://colab.research.google.com/github/MasrourTawfik/Textra-edu/blob/trading-intelligent/notebooks/CH06/CH06_G1_Visite_Guidee_STUDENT.ipynb)
+- [A2 sur Colab](https://colab.research.google.com/github/MasrourTawfik/Textra-edu/blob/trading-intelligent/notebooks/CH06/CH06_A2_Modelisation_Autonome_STUDENT.ipynb)
+
+---
+
 ## Progression du cours
 
 | Chapitre | Titre | État |
@@ -101,7 +109,7 @@ Ce dépôt est le **portail étudiant officiel** du cours *Trading Intelligent*.
 | CH03 | Comprendre et prévoir le risque | ✅ v3.0 |
 | CH04 | Exploiter les relations entre actifs | ✅ v2.0 |
 | CH05 | De l’économétrie au Machine Learning financier | ✅ v2.0 |
-| CH06 | Apprendre sans regarder le futur | 🔜 |
+| CH06 | Deep Learning pour les séries temporelles et le trading | ✅ Laboratoires v2.0 (manuel en transfert) |
 | CH07 | Du MLP aux modèles séquentiels | 🔜 |
 | CH08 | De la prédiction à la décision et au portefeuille | 🔜 |
 | CH09 | Backtesting scientifique et mesure de performance | 🔜 |
